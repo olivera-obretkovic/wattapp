@@ -1,0 +1,245 @@
+  <app-nav class="desktop"></app-nav>
+  <app-mob-nav class="mobile"></app-mob-nav>
+
+  <div class="outer">
+    <div class="container">
+      <div class="row centriranje">
+        <h2>Consumption</h2>
+        <div class="col-sm mt-4 pt-2">
+            <select [(ngModel)]="selectedGraphHistoryConsumption" (ngModelChange)="HistoryConsumption(selectedGraphHistoryConsumption, userID)">
+              <option value="24h">Previous 24 hours</option>
+              <option value="7days">Previous 7 days</option>
+              <option value="month">Previous Month</option>
+            </select>
+
+            <button class="buttonOpenModal" style="margin-left: 5px;" mat-button data-bs-target="#consumptionHistory" data-bs-toggle="modal">
+                <i class="fa fa-table" aria-hidden="true"></i>
+            </button>
+
+
+            <div *ngIf="selectedGraphHistoryConsumption === 'month'">
+                <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showPreviousMonth" [fullScreen]="false" *ngIf="showPreviousMonth"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+              <canvas #consumptionPrevMonthGraph></canvas>
+            </div>
+            <div *ngIf="selectedGraphHistoryConsumption === '7days'">
+              <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showPrevious7days" [fullScreen]="false" *ngIf="showPrevious7days"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+              <canvas #consumptionPrev7daysGraph ></canvas>
+            </div>
+            <div *ngIf="selectedGraphHistoryConsumption === '24h'">
+              <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showPrevious24h" [fullScreen]="false" *ngIf="showPrevious24h"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+              <canvas #previous24ConsumptionGraph ></canvas>
+            </div>
+        </div>
+        <div class="col-sm mt-4 pt-2" >
+          <select [(ngModel)]="selectedGraphFutureConsumption" (ngModelChange)="FutureConsumption(selectedGraphFutureConsumption, userID)">
+              <option value="24h">Next 24 hours</option>
+              <option value="7days">Next 7 days</option>
+              <option value="month">Next Month</option>
+          </select>
+
+          <button class="buttonOpenModal" style="margin-left: 5px;" mat-button data-bs-target="#futureConsumption" data-bs-toggle="modal">
+            <i class="fa fa-table" aria-hidden="true"></i>
+          </button>
+
+          <div *ngIf="selectedGraphFutureConsumption === 'month'" >
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showNextMonth" [fullScreen]="false" *ngIf="showNextMonth"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+            <canvas #consumptionNextMonthGraph></canvas>
+          </div>
+          <div *ngIf="selectedGraphFutureConsumption === '24h'" >
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showNext24h" [fullScreen]="false" *ngIf="showNext24h"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+            <canvas #next24ConsumptionGraph></canvas>
+          </div>
+          <div *ngIf="selectedGraphFutureConsumption === '7days'" >
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showNext7days" [fullScreen]="false" *ngIf="showNext7days"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+            <canvas #consumptionNext7daysGraph></canvas>
+          </div>
+      </div>
+      </div>
+      <div class="row centriranje mt-4 ">
+        <h2>Production</h2>
+        <div class="col-sm mt-4 pt-2 mb-4">
+            <select [(ngModel)]="selectedGraphHistoryProduction" (ngModelChange)="HistoryProduction(selectedGraphHistoryProduction, userID)">
+              <option value="24h">Previous 24 hours</option>
+              <option value="7days">Previous 7 days</option>
+              <option value="month">Previous Month</option>
+          </select>
+
+          <button class="buttonOpenModal" style="margin-left: 5px;" mat-button data-bs-target="#productionHistory" data-bs-toggle="modal">
+            <i class="fa fa-table" aria-hidden="true"></i>
+          </button>
+
+
+          <div *ngIf="selectedGraphHistoryProduction === '24h'">
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showProdPrevious24h" [fullScreen]="false" *ngIf="showProdPrevious24h"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+             <canvas #previous24ProductionGraph ></canvas>
+          </div>
+
+          <div *ngIf="selectedGraphHistoryProduction === 'month'">
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showProdPreviousMonth" [fullScreen]="false" *ngIf="showProdPreviousMonth"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+            <canvas #productionPrevMonthGraph></canvas>
+          </div>
+
+          <div *ngIf="selectedGraphHistoryProduction === '7days'" >
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showProdPrevious7days" [fullScreen]="false" *ngIf="showProdPrevious7days"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+            <canvas #productionPrev7daysGraph></canvas>
+          </div>
+
+
+
+        </div>
+        <div class="col-sm kolona mt-4 pt-2 mb-4" >
+            <select [(ngModel)]="selectedGraphFutureProduction" (ngModelChange)="FutureProduction(selectedGraphFutureProduction, userID)">
+              <option value="24h">Next 24 hours</option>
+              <option value="7days">Next 7 days</option>
+              <option value="month">Next Month</option>
+            </select>
+
+            <button class="buttonOpenModal" style="margin-left: 5px;" mat-button data-bs-target="#futureProduction" data-bs-toggle="modal">
+              <i class="fa fa-table" aria-hidden="true"></i>
+            </button>
+
+            <div *ngIf="selectedGraphFutureProduction === 'month'" >
+              <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showProdNextMonth" [fullScreen]="false" *ngIf="showProdNextMonth"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+              <canvas #productionNextMonthGraph></canvas>
+            </div>
+
+            <div *ngIf="selectedGraphFutureProduction === '24h'" >
+              <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showProdNext24h" [fullScreen]="false" *ngIf="showProdNext24h"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+            <canvas #next24ProductionGraph></canvas>
+            </div>
+
+            <div *ngIf="selectedGraphFutureProduction === '7days'" >
+              <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showProdNext7days" [fullScreen]="false" *ngIf="showProdNext7days"><p style="color: #fff; margin-top: 90px;" > Please wait... </p></ngx-spinner>
+            <canvas #productionNext7daysGraph></canvas>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    </div>
+  </div>
+
+
+  <div class="modal fade " id="consumptionHistory" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">
+            <span *ngIf="selectedGraphHistoryConsumption === '24h'" style="color: #026670; font-size: 20px; font-weight: 700;"> Consumption For The Previous 24h </span>
+            <span *ngIf="selectedGraphHistoryConsumption === 'month'" style="color: #026670; font-size: 20px; font-weight: 700;"> Consumption For The Previous Month </span>
+            <span *ngIf="selectedGraphHistoryConsumption === '7days'" style="color: #026670; font-size: 20px; font-weight: 700;"> Consumption For The Previous 7 days </span>
+          </p>
+          <button type="button" id="closeBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <div *ngIf="selectedGraphHistoryConsumption === '24h'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentHistoryConsumption [data]="data24h" [type]="'Consumption'" [message]="'Consumption For Previous 24h'" [time]="'Hour'"></app-modal-table>
+          </div>
+           <div *ngIf="selectedGraphHistoryConsumption === 'month'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentHistoryConsumption [data]="dataMonth" [type]="'Consumption'" [message]="'Consumption For Previous Month'" [time]="'Date'"></app-modal-table>
+          </div>
+          <div *ngIf="selectedGraphHistoryConsumption === '7days'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentHistoryConsumption [data]="data7days" [type]="'Consumption'" [message]="'Consumption For Previous 7 days'" [time]="'Day'"></app-modal-table>
+          </div>
+
+      <div class="modal-footer">
+        <button  *ngIf="selectedGraphHistoryConsumption === '24h'" type="button" (click)="modalTableComponentHistoryConsumption.exportToExcel('consumption_for_previous_24h')"  class="btn btn-primary" >EXPORT DATA</button>
+        <button  *ngIf="selectedGraphHistoryConsumption === 'month'" type="button" (click)="modalTableComponentHistoryConsumption.exportToExcel('consumption_for_previous_month')"  class="btn btn-primary" >EXPORT DATA</button>
+        <button  *ngIf="selectedGraphHistoryConsumption === '7days'" type="button" (click)="modalTableComponentHistoryConsumption.exportToExcel('consumption_for_previous_7days')"  class="btn btn-primary" >EXPORT DATA</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <div class="modal fade " id="futureConsumption" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">
+            <span *ngIf="selectedGraphFutureConsumption === '24h'" style="color: #026670; font-size: 20px; font-weight: 700;"> Consumption For The Next 24h </span>
+            <span *ngIf="selectedGraphFutureConsumption === 'month'" style="color: #026670; font-size: 20px; font-weight: 700;"> Consumption For The Next Month </span>
+            <span *ngIf="selectedGraphFutureConsumption=== '7days'" style="color: #026670; font-size: 20px; font-weight: 700;"> Consumption For The Next 7 days </span>
+          </p>
+          <button type="button" id="closeBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <div *ngIf="selectedGraphFutureConsumption === '24h'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentFutureConsumption [data]="dataNext24h" [type]="'Consumption'" [message]="'Consumption For Next 24h'" [time]="'Hour'"></app-modal-table>
+          </div>
+           <div *ngIf="selectedGraphFutureConsumption === 'month'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentFutureConsumption [data]="dataNextMonth" [type]="'Consumption'" [message]="'Consumption For Next Month'" [time]="'Date'"></app-modal-table>
+         </div>
+          <div *ngIf="selectedGraphFutureConsumption === '7days'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentFutureConsumption [data]="dataNext7days" [type]="'Consumption'" [message]="'Consumption For Next 7 days'" [time]="'Day'"></app-modal-table>
+          </div>
+
+      <div class="modal-footer">
+        <button  *ngIf="selectedGraphFutureConsumption === '24h'" type="button" (click)="modalTableComponentFutureConsumption.exportToExcel('consumption_for_next_24h')" class="btn btn-primary" >EXPORT DATA</button>
+        <button  *ngIf="selectedGraphFutureConsumption === 'month'" type="button" (click)="modalTableComponentFutureConsumption.exportToExcel('consumption_for_next_month')" class="btn btn-primary" >EXPORT DATA</button>
+        <button  *ngIf="selectedGraphFutureConsumption === '7days'" type="button" (click)="modalTableComponentFutureConsumption.exportToExcel('consumption_for_next_7days')" class="btn btn-primary" >EXPORT DATA</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="modal fade " id="productionHistory" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">
+            <span *ngIf="selectedGraphHistoryProduction === '24h'" style="color: #026670; font-size: 20px; font-weight: 700;"> Production For The Next 24h </span>
+            <span *ngIf="selectedGraphHistoryProduction === 'month'" style="color: #026670; font-size: 20px; font-weight: 700;"> Production For The Next Month </span>
+            <span *ngIf="selectedGraphHistoryProduction === '7days'" style="color: #026670; font-size: 20px; font-weight: 700;"> Production For The Next 7 days </span>
+          </p>
+          <button type="button" id="closeBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <div *ngIf="selectedGraphHistoryProduction === '24h'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentHistoryProduction [data]="data24hProd" [type]="'Production'" [message]="'Production For Previous 24h'" [time]="'Hour'"></app-modal-table>
+          </div>
+           <div *ngIf="selectedGraphHistoryProduction === 'month'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentHistoryProduction [data]="dataMonthProd" [type]="'Production'" [message]="'Production For Previous Month'" [time]="'Date'"></app-modal-table>
+         </div>
+          <div *ngIf="selectedGraphHistoryProduction === '7days'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentHistoryProduction [data]="data7daysProd" [type]="'Production'" [message]="'Production For Previous 7 days'" [time]="'Day'"></app-modal-table>
+          </div>
+
+      <div class="modal-footer">
+        <button *ngIf="selectedGraphHistoryProduction === '24h'" type="button" (click)="modalTableComponentHistoryProduction.exportToExcel('production_for_previous_24h')"  class="btn btn-primary" >EXPORT DATA </button>
+        <button *ngIf="selectedGraphHistoryProduction === 'month'" type="button" (click)="modalTableComponentHistoryProduction.exportToExcel('production_for_previous_month')"  class="btn btn-primary" >EXPORT DATA </button>
+        <button *ngIf="selectedGraphHistoryProduction === '7days'" type="button" (click)="modalTableComponentHistoryProduction.exportToExcel('production_for_previous_7days')"  class="btn btn-primary" >EXPORT DATA </button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="modal fade " id="futureProduction" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">
+            <span *ngIf="selectedGraphFutureProduction === '24h'" style="color: #026670; font-size: 20px; font-weight: 700;"> Production For The Next 24h </span>
+            <span *ngIf="selectedGraphFutureProduction  === 'month'" style="color: #026670; font-size: 20px; font-weight: 700;"> Production For The Next Month </span>
+            <span *ngIf="selectedGraphFutureProduction  === '7days'" style="color: #026670; font-size: 20px; font-weight: 700;"> Production For The Next 7 days </span>
+          </p>
+          <button type="button" id="closeBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <div *ngIf="selectedGraphFutureProduction === '24h'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentFutureProduction [data]="dataNext24hProd" [type]="'Production'" [message]="'Production For Next 24h'" [time]="'Hour'"></app-modal-table>
+          </div>
+           <div *ngIf="selectedGraphFutureProduction === 'month'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentFutureProduction [data]="dataNextMonthProd" [type]="'Production'" [message]="'Production For Next Month'" [time]="'Date'"></app-modal-table>
+         </div>
+          <div *ngIf="selectedGraphFutureProduction === '7days'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponentFutureProduction [data]="dataNext7daysProd" [type]="'Production'" [message]="'Production For Next 7 days'" [time]="'Day'"></app-modal-table>
+          </div>
+
+      <div class="modal-footer">
+        <button *ngIf="selectedGraphFutureProduction === '24h'" type="button" (click)="modalTableComponentFutureProduction.exportToExcel('production_for_next_24h')" class="btn btn-primary"> EXPORT DATA </button>
+        <button *ngIf="selectedGraphFutureProduction === 'month'" type="button" (click)="modalTableComponentFutureProduction.exportToExcel('production_for_next_month')" class="btn btn-primary"> EXPORT DATA </button>
+        <button *ngIf="selectedGraphFutureProduction === '7days'" type="button" (click)="modalTableComponentFutureProduction.exportToExcel('production_for_next_7days')" class="btn btn-primary"> EXPORT DATA </button>
+      </div>
+    </div>
+  </div>
+  </div>
+

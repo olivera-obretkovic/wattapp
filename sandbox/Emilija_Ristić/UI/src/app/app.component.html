@@ -1,0 +1,56 @@
+<div class="container">
+  <h1>CreditCard</h1>
+
+  <div class="cards-container">
+    <div class="cards-form">
+      <form #form = "ngForm" (ngSubmit) = "onSubmit()">
+        <div class="form-group">
+          <label for="">Card Name</label>
+          <input type="text" placeholder = "Enter card name" name="cardName" [(ngModel)] ="card.cardHolderName">
+
+        </div>
+        <div class="form-group">
+          <label for="">Card Number</label>
+          <input type="text" placeholder = "Enter card number" name="cardNumber" [(ngModel)] = "card.cardNumber">
+        </div>
+        
+        <div class="form-group form-group-inline">
+          <div>
+            <label for="">CVC</label>
+            <input type="text" placeholder = "CVC" name="cvc" [(ngModel)] = "card.cvc">
+          </div>
+          
+          <div>
+            <label for="">Month</label>
+            <input type="text" placeholder = "Enter expiry month" name="exiryMonth" [(ngModel)] = "card.expiryMonth">
+          </div>
+
+          <div>
+            <label for="">Year</label>
+            <input type="text" placeholder = "Enter expiry year" name="exipryYear" [(ngModel)] = "card.expiryYear">
+          </div>
+          
+
+        </div>
+        <div class="form-group">
+          <button>Save</button>
+        </div>
+      
+      </form>
+    </div>
+      
+      <div class="cards-grid">
+        <div  class="card-row" *ngFor = "let card of cards">
+          <div class="card-row-details " (click)="populateForm(card)">
+            <span>{{card.cardHolderName}}  </span>
+            <span>  {{card.cardNumber}}</span>
+            <div class="card-row-action">
+              <button (click)="deleteCard(card.id)">Delete</button>
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

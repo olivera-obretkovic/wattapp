@@ -1,0 +1,42 @@
+<header class="mb-4 fixed-top">
+  <!-- Jumbotron -->
+  <div class="p-3 text-center border-bottom" style="background-color: #026670;">
+    <div class="container-fluid">
+      <div class="row">
+        <div
+          class="col-md-5 d-flex justify-content-center justify-content-md-start align-items-center d-none d-lg-flex">
+
+          <a class="text-reset me-3" pTooltip="Home" tooltipPosition="top">
+              <i class="fa fa-home" routerLink="/home" routerLinkActive #rlh ="routerLinkActive" [routerLinkActive]="'active'"></i><br>
+          </a>
+          <!-- dashboard-component -->
+          <a class="text-reset me-3" pTooltip="Dashboard" tooltipPosition="top">
+            <i class="fa fa-tachometer "  routerLink="/dashboard" routerLinkActive #rld ="routerLinkActive" [routerLinkActive]="'active'"></i><br>
+
+          </a>
+
+        </div>
+
+        <div class="col-md-2 d-none d-lg-block">
+          <a  class="ms-md-2" id = "logo">
+            <img src="../../../assets/icons/white no-background.png" height="32px">
+
+          </a>
+          <span *ngIf="rlh.isActive">Home</span>
+          <span *ngIf="rld.isActive">Dashboard</span>
+          <span *ngIf="rlp.isActive"></span>
+        </div>
+
+        <div class="col-lg-5 d-flex justify-content-center justify-content-md-end align-items-center">
+
+            <a class="text-reset me-3" pTooltip="Profile" tooltipPosition="top">
+              <i class="fa fa-user-circle" routerLink="/profile-prosumer" routerLinkActive #rlp ="routerLinkActive" [routerLinkActive]="'active'"></i><br>
+            </a>
+
+            <a class="text-reset me-3" pTooltip="Settings" tooltipPosition="top">
+              <i class="fa fa-cog" [routerLinkActive]="'active'" routerLinkActive #rlp ="routerLinkActive" routerLink="/settings" ></i><br>
+            </a>
+          </div>
+        </div>
+      </div>
+</div>

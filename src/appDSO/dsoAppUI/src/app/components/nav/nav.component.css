@@ -1,0 +1,135 @@
+
+#logo{
+    border: none;
+    background-color: #026670;
+}
+#logo img{
+    text-align: center;
+    width: 1.8rem;
+    min-width: 2rem;
+    height: fit-content;
+    border-radius: 0.2rem;
+    padding: 0.2rem;
+    font-size: 18px;
+    font-weight: 900;
+    cursor: pointer;
+    border: none;
+    background-color: #026670;
+    transition: transform .7s ease-in-out;
+    padding-top: 0px;
+    
+}
+#logo img:hover{
+    transform: rotate(360deg);
+}
+#nav-style{
+    background-color: #026670;
+    height: 20px;
+}
+.container-fluid{
+    height: 30px;
+}
+i{
+    color: white;
+    margin-right: 5px;
+}
+
+.container{
+    float: flex;
+    
+}
+ul{
+    text-align: right;
+}
+a{
+    text-decoration: none;
+}
+p{
+    cursor: pointer;
+    border: none;
+    background-color: #026670;
+    transition: transform .7s ease-in-out;
+    text-decoration: none;
+    color: white;
+}
+
+@keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(2px);
+    }
+    50% {
+      transform: translateX(-2px);
+    }
+    75% {
+      transform: translateX(0px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+
+
+small{
+    color: white;
+}
+
+.routerLinkActive #rlh{
+    animation: shake 0.5s;
+    color: #026670;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    padding:2.5px;
+    
+    text-decoration: none;
+}
+
+.active{
+    animation: shake 0.5s;
+    color: #026670;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    padding: 3px;
+    text-decoration: none;
+    font-weight: 500;
+}
+.me-3:hover{
+    animation: shake 0.5s;
+    color: #026670;
+   
+}
+
+.me-3 p:hover{
+    color:#026670;
+    background-color: white;
+    border-radius: 5px;
+    padding:2.5px;
+    font-weight: 500;
+}
+
+span{
+    color: white;
+    margin-left: 5px;
+    display: inline-block;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* #hover2:hover{
+    border:2px solid white;
+    animation: shake 0.5s;
+    color: #026670;
+    border-radius: 5px;
+    padding:2.5px;
+    margin: 2.5px;
+    text-decoration: none;
+}
+
+#hover3:hover{
+    background-color: whitesmoke;
+    
+} */

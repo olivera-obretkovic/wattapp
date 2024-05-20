@@ -1,0 +1,82 @@
+
+  <app-nav class="desktop"></app-nav>
+  <app-mob-nav class="mobile"></app-mob-nav>
+
+  <div class="outer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm mt-2" *ngIf="weather">
+          <div class="vreme">
+            <div class="icon-wrapper">
+              <img src="../../../assets/weather-icons/partialy-cloudy.png">
+            </div>
+            <div class="text-wrapper">
+              <p class="time">{{ currentDate | async | date:'HH:mm:ss' }}</p>
+              <p class="date">{{ currentDate | async | date }}</p>
+            </div>
+            <div class="temperature-wrapper">
+              <p class="temperature">{{ weather.current_weather.temperature }}&deg;C</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-sm mt-2 mb-2">
+          <div class="vreme">
+              <div class="icon-wrapper">
+                <img src="../../../assets/weather-icons/flash-symbol.png">
+              </div>
+              <div class="text-wrapper">
+                <p style="font-weight: 400;"> Energy Expenses</p>
+                <p style="font-size: 17px;"> This Month</p>
+              </div>
+              <div class="temperature-wrapper">
+                <p> {{electricityBill}} RSD</p>
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row" >
+        <div class="col-sm">
+
+          <h3 style="color:#5F5E5C">Overview</h3>
+          <div class="vreme">
+            <div class="icon-wrapper">
+              <h4>Current Consumption</h4>
+              <p style="font-weight: 500;" class="potrosnja pt-2"> {{currentUsage}} kWh</p>
+            </div>
+            <div class="text-wrapper">
+              <h4>Current Production</h4>
+              <p style="font-weight: 500;" class="potrosnja pt-2"> {{currentProduction}} kWh</p>
+            </div>
+            <div class="temperature-wrapper">
+              <h4> Energy Saved</h4>
+              <p style="font-weight: 500;" class="potrosnja pt-2"> +{{savedEnergyMonthConsumption}}% </p>
+            </div>
+
+           </div>
+       </div>
+      </div>
+      <div class="row" >
+        <div class="col-sm">
+          <app-my-devices></app-my-devices>
+        </div>
+        <div class="col-sm">
+          <div class="card" id="grafik">
+              <canvas #previous24ConsumptionGraph></canvas>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+  </div>
+</div>
+
+

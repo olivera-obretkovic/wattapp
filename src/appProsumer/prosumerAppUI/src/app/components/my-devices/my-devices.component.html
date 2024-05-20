@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row pt-4 px-3">
+    <h1>My Devices
+    <button class="buttonOpenModal" style="margin-left: 20px; width:40px;" mat-button data-bs-target="#myDevices" data-bs-toggle="modal">
+      <i class="fa fa-table" aria-hidden="true"></i>
+    </button>
+    </h1>
+    <input type="text" [(ngModel)]="searchName" placeholder="Search device by name">
+
+    <div style="display: flex; align-items: center; justify-content: center; margin-top: 20px;">
+      <label style="display: flex; align-items: center; margin-right: 10px;">
+        <input type="checkbox" value="consumer" (change)="updateSelectedGroups($event, 'Consumer')" style="width: 16px; height: 16px; margin-top: 0px; cursor: pointer;">
+        <span style="margin-left: 5px; font-size: 14px;">Consumers</span>
+      </label>
+      <label style="display: flex; align-items: center; margin-right: 10px;">
+        <input type="checkbox" value="producer" (change)="updateSelectedGroups($event, 'Producer')" style="width: 16px; height: 16px; margin-top: 0px; cursor: pointer;">
+        <span style="margin-left: 5px; font-size: 14px;">Producers</span>
+      </label>
+      <label style="display: flex; align-items: center;">
+        <input type="checkbox" value="storage" (change)="updateSelectedGroups($event, 'Storage')" style="width: 16px; height: 16px; margin-top: 0px; cursor: pointer;">
+        <span style="margin-left: 5px; font-size: 14px;">Storages</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div *ngFor="let device of filteredDevices | searchDevice: searchName" class="device-col mt-4 mx-3">
+      <div *ngIf="device.filtered">
+
+      <div class="card-toggle">
+        <div class="button r" id="button-1">
+          <input type="checkbox" class="checkbox" [checked]="device.isToggled" (click)="confirmStateChange(device)" />
+          <div class="knobs"></div>
+          <div class="layer"></div>
+        </div>
+      </div>
+      <div class="card" [routerLink]="['/device-details', device.deviceId]">
+        <img [src]="'/assets/icons-devices/' + device.deviceTypeName.toLowerCase().trim() + '.png'" class="card-img-top" alt="{{ device.deviceTypeName }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ device.deviceName }}</h5>
+          <p class="card-text manufacturer" ><span style="font-weight: bold;">Manufacturer:</span><br> {{ device.manufacturerName }}</p>
+          <p *ngIf="this.typeOfDevices[device.deviceId] === 'Consumer'" class="card-text current"><span style="font-weight: bold;">Current Consumption:</span><br> {{ this.deviceToday[device.deviceId]?.toFixed(2) || 0 }} [kWh]</p>
+          <p *ngIf="this.typeOfDevices[device.deviceId] === 'Producer'" class="card-text current"><span style="font-weight: bold;">Current Production:</span><br> {{ this.deviceToday[device.deviceId]?.toFixed(2) || 0 }} [kWh]</p>
+          <p *ngIf="this.typeOfDevices[device.deviceId] === 'Storage'" class="card-text current"><span style="font-weight: bold;">Energy Level:</span><br> {{ this.deviceToday[device.deviceId]?.toFixed(2) || 0 }} [kWh]</p>
+         </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <button type="submit" class="btn btn-primary btn-lock mt-4 mb-4" routerLink="/add-device">Add New Devices</button>
+  </div>
+
+</div>
+
+
+<div class="modal fade " id="myDevices" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title" id="exampleModalLabel">
+          <span style="color: #026670; font-size: 20px; font-weight: 700; font-style: italic;"> My Devices </span>
+        </p>
+        <button type="button" id="closeBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table tableexporter #myTable id = "myTable">
+          <tr style="position: sticky; top: -20px;">
+              <th></th>
+              <th>Device name</th>
+              <th>Manufacturer</th>
+              <th>Energy [kWh]</th>
+              <th> Active </th>
+          </tr>
+          <tr *ngFor="let device of filteredDevices">
+              <td><img [src]="'/assets/icons-devices/' + device.deviceTypeName.toLowerCase().trim() + '.png'" class="img-tabela" alt="{{ device.deviceTypeName }}"></td>
+              <td> {{ device.deviceName }} </td>
+              <td> {{ device.manufacturerName }}</td>
+              <td>{{this.deviceToday[device.deviceId]?.toFixed(2) || 0}}</td>
+              <td *ngIf = device.isToggled> On </td>
+              <td *ngIf = !device.isToggled> Off </td>
+          </tr>
+        </table>
+      </div>
+    <div class="modal-footer">
+      <button type="button" style="width:150px" (click)="exportToExcel()" class="btn btn-primary" >EXPORT DATA</button>
+    </div>
+  </div>
+</div>
+</div>

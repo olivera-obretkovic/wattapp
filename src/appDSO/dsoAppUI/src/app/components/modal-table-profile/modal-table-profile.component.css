@@ -1,0 +1,25 @@
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: visible;
+  }
+ thead{
+  position: sticky;
+  top: 0;
+  background-color: #f1f1f1; /* Set the desired background color for the sticky header */
+  z-index: 1; /* Make sure the sticky header is above the table body */
+ }
+  th {
+    background-color: #026670;
+    color: #fff;
+    font-weight: 700;
+    text-align: left;
+  }
+  
+  td,
+  th {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }

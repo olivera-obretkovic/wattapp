@@ -1,0 +1,44 @@
+<header class="mb-4 fixed-top">
+  <!-- Jumbotron -->
+  <div class="p-3 text-center border-bottom" style="background-color: #026670;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-5 d-flex justify-content-center justify-content-md-start align-items-center d-none d-lg-flex">
+          <a class="text-reset me-3">
+            <p  routerLink="/home" routerLinkActive #rld ="routerLinkActive" [routerLinkActive]="'active'">Home</p><br>
+          </a>
+          <a class="text-reset me-3" *ngIf="getRole() !== 'Admin'">
+            <p routerLink = "/table" routerLinkActive #rlt ="routerLinkActive" [routerLinkActive]="'active'">Prosumers</p><br>
+          </a>
+          <a class="text-reset me-3" *ngIf="getRole() !== 'Dispatcher'">
+            <p  routerLink = "/signup" routerLinkActive #rlw ="routerLinkActive" [routerLinkActive]="'active'">Employee</p><br>
+          </a>
+
+        </div>
+
+        <div class="col-md-2 d-none d-lg-block">
+          <a  class="ms-md-2" id = "logo">
+            <img src="../../../assets/icons/white no-background.png" height="32px">
+          </a>
+
+          <!-- <span *ngIf="rld.isActive"></span>
+          <span *ngIf="rlt.isActive"></span>
+          <span *ngIf="rlw.isActive"> </span>
+          <span *ngIf="rln.isActive"></span>
+          <span *ngIf="rlo.isActive"></span> -->
+        </div>
+
+        <div class="col-lg-5 d-flex justify-content-center justify-content-md-end align-items-center">
+          <a class="text-reset me-3" *ngIf="getRole() !== 'Dispatcher'">
+              <p  routerLink = "/requirements" routerLinkActive #rln ="routerLinkActive" [routerLinkActive]="'active'">Requests</p><br>
+          </a>
+            <a class="text-reset me-3" >
+              <p  routerLink = "/profile" routerLinkActive #rlp ="routerLinkActive" [routerLinkActive]="'active'">Profile</p><br>
+            </a>
+            <a class="text-reset me-3" >
+              <p [routerLinkActive]="'active'" routerLinkActive #rlo ="routerLinkActive" (click)="signOut()">Sign Out</p><br>
+            </a>
+          </div>
+        </div>
+      </div>
+</div>

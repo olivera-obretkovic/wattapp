@@ -1,0 +1,43 @@
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showsignin" [fullScreen]="true" *ngIf="showsignin"><p style="color: #fff; " > Please wait... </p></ngx-spinner>
+<div class="outer" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;">
+    <div class="container-fluid">
+        <div class="row centriranje w-100">
+            <div class="centriranje" style="padding:60px;">
+            <img class="slika" src="../../../assets/icons/logo-white.png" alt="logo" >
+            </div>
+        </div>
+        <div class="row centriranje w-100">
+                <div class="forma panel border" style="width: 30%;">
+                    <h3 class="pt-4 m text-center">
+                        Welcome back!
+                    </h3>
+                    <div class="panel-body">
+                        <form [formGroup] = "loginForm" (ngSubmit)="onSubmit()">
+                            <div class="input-group form-group pt-4">
+                                <input class = "form-control"  [ngClass] = "{'is-invalid invalid-input' : submitted && fields['email'].errors}" formControlName = "email" type="text" placeholder="Email">
+                                <span class="input-group-addon addon-icon" [ngClass] = "{'is-invalid invalid-icon' : submitted && fields['password'].errors}"><i class="fa fa-user"></i></span>
+                                    <div class="invalid-feedback">
+                                        <span class= "text-danger" *ngIf="submitted && fields['email'].errors?.['required']">*Email is required!</span>
+                                        <span class = "text-danger" *ngIf="fields['email'].errors?.['email']">*Please provide a valid email address</span>
+                                    </div>
+                                </div>
+
+
+                            <div class="input-group form-group pt-4 mb-1">
+                                <input class = "form-control" [ngClass] = "{'is-invalid invalid-input' : submitted && fields['password'].errors}" formControlName = "password" [type]="type" placeholder="Password">
+                                <span  class="input-group-addon addon-icon" [ngClass] = "{'is-invalid invalid-icon' : submitted && fields['password'].errors}" ><i style="cursor:pointer"  (click) = "hideShowPass()" class="fa {{eyeIcon}}"></i></span>
+                                <div class="invalid-feedback">
+                                    <span class= "text-danger" *ngIf="submitted && fields['password'].errors?.['required']">*Password is required!</span>
+                                    <span class = "text-danger" *ngIf="fields['password'].errors?.['minlength']">*Password must be at least 6 characters long!</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lock mt-4 mb-4 w-50 text-center" routerLinkActive="router-link-active">Login</button>
+
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

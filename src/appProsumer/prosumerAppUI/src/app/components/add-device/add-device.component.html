@@ -1,0 +1,64 @@
+<app-nav class="desktop"></app-nav>
+<app-mob-nav class="mobile"></app-mob-nav>
+<div class="outer centriranje">
+    <div class="container">
+        <div class="row">
+            <div class="col-1 align-center">
+                <button mat-icon-button (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+            <div class=" col-10 centriranje"><h3>Add New Device</h3></div>
+            <div class="col-1"></div>
+        </div>
+                <form [formGroup]="addDeviceForm" (ngSubmit)="onSubmit()">
+                    <div class="row red1">
+                        <div class="custom-select col-sm">
+                            <div class="pt-3">
+                                <label >Device Type:</label>
+                                <select name="type" formControlName="type" (change)="onGroupSelected($event)">
+                                  <option value="">-- Select Type --</option>
+                                  <option *ngFor="let group of groups" [value]="group.id">{{ group.name }}</option>
+                                </select>
+                              </div>
+
+                              <div class="pt-3">
+                                <label >Manufacturer:</label>
+                                <select id="manufacturer" formControlName="manufacturer" (change)="onManufacturerChange($event)">
+                                  <option value="">-- Select Manufacturer --</option>
+                                  <option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.manufacturerID">{{ manufacturer.manufacturerName }}</option>
+                                </select>
+                              </div>
+
+                              <div class="pt-3">
+                                <label >Device:</label>
+                                <select id="device" formControlName="device" (change)="onDeviceChange($event)">
+                                  <option value="">-- Select Device --</option>
+                                  <option *ngFor="let device of devices" [value]="device.id">{{ device.name }}</option>
+                                </select>
+                              </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="inputi">
+                                <div class="form-group pt-3">
+                                    <label >Device Name</label>
+                                    <input class = "form-control" formControlName = "deviceName" type="text" placeholder="Insert Device Name">
+                                </div>
+                                <div class="form-group pt-3">
+                                    <label >Device Mac Address</label>
+                                    <input class = "form-control" formControlName = "macAddress" type="text" placeholder="Insert Device Mac Address">
+                                    <div>
+                                        <span class = "text-danger" *ngIf="fields['macAddress'].errors?.['pattern']">*Please provide a valid mac address</span>
+                                    </div>
+                                </div>
+                                <div class="form-group pt-3">
+                                    <label > Wattage:</label>
+                                    <input disabled  class = "form-control" type="text" [value]="selectedWattage?.wattage" placeholder="0.50">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="dodavanje btn btn-primary font-weight-bold btn-lock mt-4 mt-2"><img src="assets/icons/moreb.png" alt="icon" style="width:20px; margin-right: 10px;">Add Device</button>
+                </form>
+    </div>
+</div>

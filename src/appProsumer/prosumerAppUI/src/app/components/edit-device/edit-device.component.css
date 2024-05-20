@@ -1,0 +1,188 @@
+@font-face {
+  font-family: font1;
+  src: url(/assets/fonts/Chivo-Regular.ttf);
+}
+
+#edit-title
+{
+  text-align: center;
+  color: #fff;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+#edit-title h1
+{
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.container{
+  position: relative;
+  background-color: #026670;
+  border-radius: 10px;
+  width: 75%;
+  top: 50px;
+  left: 60px;
+}
+
+.row{
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  margin-left: 45px;
+  margin-right: 45px;
+  padding-top: 20px;
+}
+
+form
+{
+  margin-left: 20px;
+}
+
+
+#form-col {
+  margin-top: -80px;
+  padding-right: 40px;
+  margin-left: 20px;
+}
+
+#form-col2
+{
+  margin-top: 24px;
+}
+
+
+.form-group{
+  padding-bottom: 20px;
+  position: relative;
+}
+.form-group ::placeholder{
+  color: black;
+  font-style: italic;
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+.form-group input{
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  height: 50px;
+  width: 430px;
+  text-align: center;
+}
+
+.form-group label
+{
+  font-size: 13px;
+  font-weight: bold;
+}
+
+input:focus {
+  box-shadow: 0 0 2px 1px #026670;
+  border: 2px solid #026670;
+}
+
+#permissions
+{
+  background-color: #FFFFFF;
+  padding-top: 20px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  width: 430px;
+  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+#permissions h4
+{
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#line
+{
+  margin-top: -5px;
+  width: 350px;
+  height: 3px;
+  color: black;
+  margin-left: 40px;
+}
+
+
+button{
+  border-radius: 17px;
+  background-color:white;
+  color:#026670;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  filter:drop-shadow(0px 4px 4px rgba(0,0,0,0.25));
+  width: 150px;
+  height: 40px;
+  position: relative;
+  top: -10px;
+  left: 490px;
+  text-align: center;
+  padding-top: 5px;
+}
+
+button:hover {
+  color: #fff;
+  border: 2px solid white;
+  background-color: #026670;
+}
+
+
+
+
+#toggle-button-2
+{
+  width: 40px;
+  height: 20px;
+  position: relative;
+  left: 74px;
+  top: -5px;
+}
+
+#toggle-button-1
+{
+  width: 40px;
+  height: 20px;
+  position: absolute;
+  top: 58px;
+  right: 40px;
+}
+
+
+
+#labela1
+{
+  margin-left: -193px;
+  margin-top: -20px;
+  position: relative;
+  font-weight: medium !important;
+  font-size: 14px;
+}
+
+#labela2
+{
+  margin-left: -103px;
+  position: relative;
+  font-weight: medium !important;
+  font-size: 14px;
+}
+
+.toggle-buttons > .form-check > label{
+  text-transform: none;
+}
+
+
+.permissions > label{
+  font-weight: bolder;
+}
+.form-check-input:checked {
+background-color: #026670;
+}
+

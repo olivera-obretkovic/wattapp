@@ -1,0 +1,32 @@
+<div class="jumbtron py-3">
+  <h1 class="display-4 text-center" style="color:white; font-weight: bold;">Astrosvet</h1>
+</div>
+
+<div class="row" >
+  <div class="col-md-6">
+    <app-constellation-details-form></app-constellation-details-form>
+  </div>
+  <div class="col-md-6" >
+    <table class="table" style="color:white;" >
+      <thead class="thead-light">
+        <tr >
+          <th style="color:white; font-weight: bolder;">Naziv sazvezdja</th>
+          <th style="color:white; font-weight: bolder;">Latinski naziv</th>
+          <th style="color:white; font-weight: bolder;">Naziv zvezde</th>
+          <th></th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pd of service.list">
+        <td (click)="populateForm(pd)">{{pd.constellationName}}</td>
+        <td (click)="populateForm(pd)">{{pd.constellationLatinName}}</td>
+        <td (click)="populateForm(pd)">{{pd.constellationStar}}</td>
+        <td>
+          <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(pd.constellationDetailsID)" ></i>
+        </td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+</div>
+

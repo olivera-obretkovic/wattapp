@@ -1,0 +1,13 @@
+<table tableexporter #tableTable id = "tableTable" >
+    <thead>
+        <tr>
+            <th>{{ time }}</th>
+            <th>Energy {{ type }} [kWh]</th>
+
+        </tr>
+    </thead>
+    <tr *ngFor="let item of data">
+        <td>{{ item.timestamp }}</td>
+        <td>{{ item.powerUsage}} </td>
+    </tr>
+  </table>

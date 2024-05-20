@@ -1,0 +1,154 @@
+/* 
+-- CoLor pallete --
+background-color: #fffaff
+border-color:#303036;
+delete-button:#FC5130
+button-color-save:#30BCED 
+-- Fonts --
+font-family: "Lucida Console", "Courier New", monospace;
+
+*/
+.container{
+    padding: 3em;
+    max-width: 1000px;
+    margin: 0 auto; 
+}
+
+h1{
+    text-align: center;
+    color:#547aa5;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.card-container{
+    display: flex;
+    width: 100%;
+    padding-top: 5em;
+}
+
+.cards-form{
+    width: 50%;
+    padding: 2em;
+}
+
+.cards-grid{
+    width: 30%;
+    padding: 0em;
+    padding-top: 0em;
+    position: absolute;
+    padding-top: 2em;
+}
+
+form .form-group{
+    margin-bottom: 1em;
+}
+
+form label{
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight:bold;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    color: #547aa5;
+}
+
+form input[type="text"], form input[type="password"],form input[type="numer"]{
+    width: 100%;
+    padding: 0.5em 0.3em;
+    margin-bottom: 0.5em;
+    font-weight: 200;
+    font-size:1.2em;
+    border-color:0.5px #303036; ;
+    border-radius: 5px 5px;
+    height: fit-content;
+}
+
+form input, input::placeholder{
+    font-size: 11px;
+    color: #303036;
+}
+
+.form-group-inline{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.form-group-inline div{
+    width: 30%;
+}
+
+form button{
+    background-color: #547aa5;
+    border-radius: 15px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+    color:whitesmoke;
+    font-size: 16px;
+    padding: 10px 15px;
+    cursor: pointer;
+
+    
+   
+}
+
+.card-row{
+    width: 100%;
+    display: flex;
+    margin-bottom: 0.2em;
+    padding: 5px;
+}
+.card-row-details{
+   background-color: #547aa5;
+    flex-grow: 1;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 0.2em;
+    cursor: pointer;
+    border-radius: 10px 14px;
+    border-color: #303036;
+    color: whitesmoke;
+    font-family: 'Courier New', Courier, monospace;
+    
+    
+}
+
+.card-row-action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    
+}
+
+
+.card-row-action a{
+    display: block;
+    cursor: pointer;
+    padding:1em;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+}
+.card-row-action button{
+    display: inline;
+    border-radius: 10px 13px;
+    padding: 5px 8px;
+    font-size: 15px;
+    margin-left: 0.5em;
+    background-color: #303036;
+    color: whitesmoke;
+    border-color: whitesmoke;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.cards-grid{
+    float: right;
+    position: relative;
+    margin-top: -380px;
+    
+}

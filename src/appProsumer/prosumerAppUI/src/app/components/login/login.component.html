@@ -1,0 +1,88 @@
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.6)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="show" [fullScreen]="true" *ngIf="show"><p style="color: white; margin-top: 60px;" > Please wait... </p></ngx-spinner>
+
+<div class="outer" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;">
+    <div class="container-fluid">
+        <div class="row centriranje pt-4">
+            <img src="/assets/icons/logo-white.png"  class="slika" alt="logo">
+        </div>
+        <div class="row centriranje pt-4">
+                <div class="forma panel border bg-white">
+                    <h3 class="pt-3 m">
+                        Sign in
+                    </h3>
+                    <div class="panel-body">
+                        <form [formGroup] = "loginForm" (ngSubmit)="onSubmit()">
+                            <div class="input-group form-group pt-4">
+                                <input class = "form-control"  [ngClass] = "{'is-invalid invalid-input' : submitted && fields['email'].errors}" formControlName = "email" type="text" placeholder="Email">
+                                <span class="input-group-addon addon-icon" [ngClass]="{'invalid-icon': submitted && fields['email'].errors}"><i class="fa fa-user"></i></span>
+                                    <div class="invalid-feedback">
+                                        <span class= "text-danger" *ngIf="submitted && fields['email'].errors?.['required']">*Email is required!</span>
+                                        <span class = "text-danger" *ngIf="fields['email'].errors?.['email']">*Please prvoide a valid email address!</span>
+                                    </div>
+                            </div>
+
+
+                            <div class="input-group form-group pt-4">
+                                    <input class = "form-control" [ngClass] = "{'is-invalid invalid-input' : submitted && fields['password'].errors}" formControlName = "password" [type]="type" placeholder="Password">
+                                    <span  class="input-group-addon addon-icon" [ngClass]="{'invalid-icon': submitted && fields['password'].errors}" style="cursor:pointer"><i (click) = "hideShowPass()" class="fa {{eyeIcon}}"></i></span>
+                                    <div class="invalid-feedback">
+                                        <span class= "text-danger" *ngIf="submitted && fields['password'].errors?.['required']">*Password is required!</span>
+                                        <span class = "text-danger" *ngIf="fields['password'].errors?.['minlength']">*Password must be at least 6 characters long!</span>
+                                    </div>
+                            </div>
+
+                                <div class="form-group form-check mb-3 mt-3 zapamti">
+                                    <input style="cursor: pointer" class="checkbox" formControlName="rememberMe" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">
+                                      Remember Me?
+                                    </label>
+                                </div>
+
+                            <div class="form-inline fr mt-2 text-center">
+                                <a id = "forget" data-bs-toggle="modal" data-bs-target="#exampleModal" class="forgotten font-weight-bold font-italic" >Forgot Password?</a>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lock mt-2 w-100">Login</button>
+
+                            <div class="account text-center pt-4 pb-2">
+                                <span style="color: black;">Don't have an account? </span><a id="forget" routerLink="/signup">Sign up here</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title" id="exampleModalLabel">
+          <span style="color: #026670; font-size: 25px; font-weight: 700;"> Forgot your password? </span><br>
+          <small>Enter your email and we will send you a link to reset your password.</small>
+        </p>
+
+        <button type="button" id="closeBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+      </div>
+      <div class="modal-body">
+        <div class="form-group pt-3">
+              <div class="input-group form-group ">
+                      <input class="form-control" [(ngModel)]="resetPasswordEmail" (ngModelChange)="checkValidEmail($event)" type="text" placeholder="Email">
+                      <span class="input-group-addon addon-icon"><i class="fa fa-user"></i></span>
+
+              </div>
+
+            </div>
+        <small *ngIf="!resetPasswordEmail" class="text-danger">*Email is required!</small>
+        <small *ngIf="!isValidEmail && resetPasswordEmail" class="text-danger">*Email is invalid!</small>
+    </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="confirmToSend()">Send</button>
+        </div>
+  </div>
+</div>
+</div>

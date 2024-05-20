@@ -1,0 +1,18 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+html,
+body {
+    min-height: 100vh;
+    height: auto;
+    margin: 0;
+    background-image: radial-gradient(circle, #18709f, #007590, #19767c, #3c766a, #54745e);
+
+    font-family: "Palatino Linotype", serif;
+}
+
+app-root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}

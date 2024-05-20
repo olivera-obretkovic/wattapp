@@ -1,0 +1,16 @@
+<mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+<div *ngIf="showMeHome">
+    <app-nav class="desktop"></app-nav>
+<app-mob-nav class="mobile"></app-mob-nav>
+
+<div class="container" >
+
+    <h1>{{data}}</h1>
+    <button routerLink="/add-device">Add New Device</button>
+</div>
+
+</div>
+
+<div *ngIf = "showMeHome2">
+    <app-home2></app-home2>
+</div>

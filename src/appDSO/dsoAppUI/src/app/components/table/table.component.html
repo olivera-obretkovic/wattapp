@@ -1,0 +1,793 @@
+<app-nav></app-nav>
+<div class="d-flex justify-content-center align-items-center w-100 h-100">
+  <div class="row w-100" id="row-page" id="myBack">
+    <div class="col-lg-7">
+      <div class="input-div">
+        <button (click)="exportToExcel()">Export all</button>
+        <button (click)="exportSelectedData()">Export selected</button>
+      </div>
+      <div class="card">
+        <!-- <table tableexporter class="table-hover" #myTable id = "myTable">
+              <thead>
+                <tr>
+                  <th style="width: 3%;"></th>
+                  <th >First Name</th>
+                  <th >Last Name</th>
+                  <th style="width: 23%;">Address</th>
+                  <th style="width: 15%;"(click)="sortData2('production')"><i class="fa fa-arrow-down" aria-hidden="true" style = "color:white" *ngIf="currentSortOrder2 ==='asc'"></i><i class="fa fa-arrow-up"  style ="color:white" *ngIf="currentSortOrder2 === 'desc'"></i>Production</th>
+                  <th style="width: 15%;"(click)="sortData1('consumption')"><i class="fa fa-arrow-down" aria-hidden="true" style = "color:white" *ngIf="currentSortOrder1 ==='asc'"></i><i class="fa fa-arrow-up"  style ="color:white" *ngIf="currentSortOrder1 === 'desc'"></i>Consumption</th>
+                  <th style="width: 20%;"></th>
+
+                </tr>
+              </thead>
+              <tr *ngFor="let user of allUsers | filterName: _searchByName: _searchByAddress; let i = index;" (click)="showMeOnMap(user.id); selectedColumn = i;" [class.active-column]="selectedColumn === i || selectedUsers.includes(user)">
+                  <td *ngIf="user"><input [(ngModel)]="user.selected"  type = "checkbox" style="width: 20px;" (click) = "toggleExportSelected(user); toggleSelection(user, i)"></td>
+                  <td >{{user.firstName}}</td>
+                  <td>{{user.lastName}}</td>
+                  <td>{{user.address}}, {{user.city}}, {{user.country}}</td>
+                  <td>{{user.production}} kWh</td>
+                  <td>{{user.consumption}} kWh</td>
+                  <td><button class="btn" (click)="openModel();">Show me profile</button></td>
+              </tr>
+          </table>
+          <div class="col">
+            <tr style="width: 100%; display: flex; justify-content: center; text-align: center;">
+              <p-paginator class="w-100" [rows]="pageSize" [totalRecords]="lengthOfUsers" [rowsPerPageOptions]="pageSizeOptions" (onPageChange)="onPageChange($event); deselectUsers();"></p-paginator>
+            </tr>
+          </div> -->
+
+          
+        <p-table
+          #dt
+          [value]="allUsers"
+          [rows]="5"
+          [(selection)]="selectedUsersTable"
+          [paginator]="true"
+          [globalFilterFields]="['firstName','lastName','address']"
+          [rowHover]="true"
+          [filterDelay]="0"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [showCurrentPageReport]="true">
+          <ng-template pTemplate="caption">
+            <div class="table-header">
+                <span class="p-input-icon-right">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Global Search"/>
+                </span>
+            </div>
+        </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th pSortableColumn="firstName">FirstName
+                <p-sortIcon field="firstName"></p-sortIcon>
+                <p-columnFilter type="text" field="firstName" display="menu" class="ml-auto"></p-columnFilter></th>
+              <th pSortableColumn="lastName">LastName 
+                <p-sortIcon field="lastName"></p-sortIcon>
+                <p-columnFilter type="text" field="lastName" display="menu" class="ml-auto"></p-columnFilter></th>
+              <th pSortableColumn="address">Address
+                <p-sortIcon field="address"></p-sortIcon>
+                <p-columnFilter type="text" field="address" display="menu" class="ml-auto"></p-columnFilter></th>
+              <th pSortableColumn="production">Production 
+                <p-sortIcon field="production"></p-sortIcon></th>
+              <th pSortableColumn="consumption">Consumption
+                <p-sortIcon field="consumption"></p-sortIcon></th>
+              <th>User Profile</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-user>
+            <tr (click)="showMeOnMap(user.id)">
+              <td>
+                <p-tableCheckbox [value]="user"></p-tableCheckbox>
+              </td>
+              <!-- <td *ngIf="user"><input [(ngModel)]="user.selected"  type = "checkbox" style="width: 20px;" (click) = "toggleExportSelected(user); toggleSelection(user, i)"></td>   -->
+              <td >{{user.firstName}}</td>
+              <td>{{user.lastName}}</td>
+              <td>{{user.address}}, {{user.city}}</td>
+              <td>{{user.production}} kWh</td>
+              <td>{{user.consumption}} kWh</td>
+              <td><button class="btn" (click)="openModel();">Show me profile</button></td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">In
+              total there are {{ allUsers ? allUsers.length : 0 }} Users.</div>
+          </ng-template>
+        </p-table>
+
+      </div>
+    </div>
+    <div class="col d-flex justify-content-end align-items-end flex-column">
+      <div id="map" class="w-100" style="height: 80%;">
+      </div>
+      <div
+        class="style-info d-flex justify-content-between align-items-center w-100">
+        <li class="info">
+          <i class="fa fa-square" aria-hidden="true" style="color:#62C370"></i>
+          Green zone (up to 350 kWh)
+        </li>
+        <li class="info">
+          <i class="fa fa-square" aria-hidden="true" style="color:#EC7357"></i>
+          Orange zone (from 350kWh to 700kWh)
+        </li>
+        <li class="info">
+          <i class="fa fa-square" aria-hidden="true" style="color:#F42C04"></i>
+          Red zone (over 700kWh)
+        </li>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">User Profile</h4>
+          <button type="button" class="btn-close" (click)="closeModel()"
+            data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" *ngIf="userPopUp">
+          <div class="row" id="row-modal">
+            <h1 class="text-center">{{userPopUp.firstName}}
+              {{userPopUp.lastName}}</h1>
+            <div>
+              <span
+                [ngClass]="{'green':  userPopUp.sharesDataWithDso === true, 'red':  userPopUp.sharesDataWithDso === false}"><i
+                  class="fa fa-check-square-o"> User share data with DSO</i></span>
+
+            </div>
+            <div class="row" id="cards-current">
+              <div class="col" id="col-popUp">
+                <div class="card" id="card-popUp">
+                  <h3 class="card-title" id="card-title-popUp">Current
+                    production:</h3>
+                  <div class="card-body" id="card-body-popUp">
+                    {{userPopUp.production}} kWh
+                  </div>
+                </div>
+              </div>
+
+              <div class="col" id="col-popUp">
+                <div class="card" id="card-popUp">
+                  <h3 class="card-title" id="card-title-popUp">Current
+                    consumption:</h3>
+                  <div class="card-body" id="card-body-popUp">
+                    {{userPopUp.consumption}} kWh
+                  </div>
+                </div>
+              </div>
+              <div class="col" id="col-popUp">
+                <div class="card" id="card-popUp">
+                  <h3 class="card-title" id="card-title-popUp">Saved Energy:</h3>
+                  <div class="card-body" id="card-body-popUp">
+                    {{savedEnergyUser}} %
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="userPopUp.sharesDataWithDso">
+              <div class="col">
+                <div class="id-button-popUp">
+                  <button class="my-button active" [class.active]="isActiveUser"
+                    (click)="toggleActive('user');">About User</button>
+                  <button class="my-button active"
+                    [class.active]="isActiveDevice"
+                    (click)="toggleActive('device');">Devices</button>
+                  <button class="my-button active"
+                    [class.active]="isActiveSystem"
+                    (click)="toggleActive('system');">System</button>
+
+                </div>
+                <div class="row" *ngIf="showMeGeneral"
+                  style="margin-left: 10px;">
+                  <div class="col-sm" id="userInfo">
+                    <h2 class="text-left">General information</h2>
+                    <p><span>E-mail: </span>{{userPopUp.email}}</p>
+                    <p><span>Phone number:</span> {{userPopUp.phoneNumber}}</p>
+                    <p><span>City: </span>{{userPopUp.country}},
+                      {{userPopUp.city}}</p>
+                    <p><span>Address: </span>{{userPopUp.address}}</p>
+                  </div>
+                  <div class="col-sm" id="userInfo">
+                    <h2 class="text-right">Device Details</h2>
+                    <p><span>Total number of devices:</span>
+                      {{allUserDevices.length}} </p>
+                    <p><span>Producers:</span> {{numberOfProsumers}}</p>
+                    <p><span>Consumers: </span>{{numberOfConsumers}}</p>
+                    <p><span>Storage:</span> {{numberOfStorage}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="showDevicePage">
+              <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)" size="medium"
+                      color="#fff" type="ball-spin"
+                      [showSpinner]="showMeDevicesLoader " [fullScreen]="false"
+                      *ngIf="showMeDevicesLoader"><p
+                        style="color: #fff; margin-top:60px;"> Please wait...
+                      </p></ngx-spinner>
+              <div class="row" id="table">
+                <div class="col-sm"
+                  style="overflow:auto; height: 300px; scrollbar-color: #026670; scrollbar-width: thin; padding-right:0px">
+                  <table>
+                    <thead style="position: sticky; top :0; z-index: 1px;">
+                      <tr >
+                        <th>Device name</th>
+                        <th>Device manifacture</th>
+                        <th>Mac Address</th>
+                        <th *ngIf="!showFilterOptions"
+                          style="text-align: center;">Type of
+                          Device <i class="fa fa-filter" aria-hidden="true"
+                            style="color:white" (click)="toggleFilterOptions()"></i></th>
+                        <th class="filter-options" *ngIf="showFilterOptions">
+                          <select [(ngModel)]="selectedFilterOption">
+                            <option value="All Devices">All Devices</option>
+                            <option value="Consumers">Consumers</option>
+                            <option value="Prosumers">Producers</option>
+                            <option value="Storages">Energy Store</option>
+                          </select>
+                          <button class="apply" (click)="applyFilter()">Apply</button>
+                        </th>
+                        <th>Device Status</th>
+                        <th>Energy [kWh]</th>
+                        <th>Control Device</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let device of allUserDevices; let j = index;"
+                        [(ngModel)]="selectedDevice"
+                        (click)="selectedColumn1 = j; toggleDeviceStatus(device);"
+                        [class.active-column]="selectedColumn1 === j && selectedDevice">
+                        <td>{{device.deviceTypeName}}</td>
+                        <td>{{device.manufacturerName}}</td>
+                        <td>{{device.macAdress}}</td>
+                        <td>{{device.typeOfDevice}}</td>
+                        <td [ngClass]="{'green': device.statusOfDevice === 'ON', 'red': device.statusOfDevice === 'OFF'}">{{device.statusOfDevice}}</td>
+                        <td>{{device.powerusage}}</td>
+                        <td *ngIf="device.dsoHasControl === true">
+                          <label class="switch">
+                            <input type="checkbox" [checked]="device.statusOfDevice === 'ON'">
+                            <span class="slider round"></span>
+                          </label>
+                        </td>
+                        <td *ngIf="device.dsoHasControl === false">
+                          <span>
+                            <i class="fa fa-minus-square" style="color:red" aria-hidden="true"> Access denied!</i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                    
+                    
+                  </table>
+                  
+                </div>
+                <!-- <div class="col-sm-4">
+                  <div *ngIf="deviceDETAILID?.typeOfDevice != 'Storage'">
+                    <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)" size="medium"
+                      color="#fff" type="ball-spin"
+                      [showSpinner]="graphDeviceLoader " [fullScreen]="false"
+                      *ngIf="graphDeviceLoader"><p
+                        style="color: #fff; margin-top:60px;"> Please wait...
+                      </p></ngx-spinner>
+                    <canvas #prev24DeviceID></canvas>
+                  </div>
+                  
+                    <div *ngIf="deviceDETAILID?.typeOfDevice== 'Storage'" class="col-6 centriranje">
+                      <div *ngIf="percentage <= 100 && percentage >=90" class="battery">
+                        <div class="battery-level" style="height:100%;"></div>
+                      </div>
+        
+                      <div *ngIf="percentage >= 75 && percentage <=89" class="battery">
+                        <div class="battery-level" style="height:75%;"></div>
+                      </div>
+        
+                      <div *ngIf="percentage >= 50 && percentage <=74" class="battery">
+                        <div class="battery-level" style="height:50%;"></div>
+                      </div>
+        
+                      <div *ngIf="percentage >= 21 && percentage <=49" class="battery">
+                        <div class="battery-level" style="height:25%;"></div>
+                      </div>
+        
+                      <div *ngIf="percentage >= 11 && percentage <=20" class="battery">
+                        <div class="battery-level warn" style="height:18%;"></div>
+                      </div>
+        
+                      <div *ngIf="percentage <= 10 " class="battery">
+                        <div class="battery-level red" style="height:10%;"></div>
+                      </div>
+                    
+                      <div class="col-6 centriranje">
+                        <h1 style="color:#026670; font-weight:bold; font-size:30px;">{{percentage}}%</h1>
+                      </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+
+            <div class="row" *ngIf="showSystemPage">
+
+              <div>
+                <div class="id-button-popUp">
+                  <button class="my-button active"
+                    [class.active]="isActioveConsumer"
+                    (click)="toggleActiveCP('consumer');  ">Consumption</button>
+                  <button class="my-button active"
+                    [class.active]="isActiveProsumer"
+                    (click)="toggleActiveCP('prosumer'); ">Production</button>
+                </div>
+
+
+                <div class="row" id="graph-position" *ngIf="showMeConsumption">
+
+                  <div class="col" id="graph">
+
+                    <label for="graphSelect">Select Graph:</label>
+                    <div>
+                      <select class="select-modal"
+                        [(ngModel)]="selectedGraphHistoryConsumption"
+                        (ngModelChange)="HistoryConsumption(selectedGraphHistoryConsumption)">
+                        <option value="month">Previous Month</option>
+                        <option value="7days">Previous 7 Days</option>
+                        <option value="24h">Previous 24 Hours</option>
+                      </select>
+                      <button class="buttonOpenModal" style="margin-left: 5px;"
+                        mat-button data-bs-target="#HistoryConsumption"
+                        data-bs-toggle="modal">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                      </button>
+                    </div>
+
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphHistoryConsumption === 'month'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="consumptionPrevMonthLoader "
+                            [fullScreen]="false"
+                            *ngIf="consumptionPrevMonthLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #consumptionPrevMonthGraph></canvas>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphHistoryConsumption === '7days'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="consumptionPrev7DaysLoader "
+                            [fullScreen]="false"
+                            *ngIf="consumptionPrev7DaysLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #consumptionPrev7DAYS></canvas>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphHistoryConsumption === '24h'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="consumptionPrevious24hLoader "
+                            [fullScreen]="false"
+                            *ngIf="consumptionPrevious24hLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #previous24ConsumptionGraph></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col" id="graph">
+                    <label for="graphSelect">Select Graph:</label>
+                    <div>
+                      <select class="select-modal"
+                        [(ngModel)]="selectedGraphFutureConsumption"
+                        (ngModelChange)="FutureConsumption(selectedGraphFutureConsumption)">
+                        <option value="month">Next Month</option>
+                        <option value="7days">Next 7 days</option>
+                        <option value="24h">Next 24 hours</option>
+                      </select>
+                      <button class="buttonOpenModal" style="margin-left: 5px;"
+                        mat-button data-bs-target="#FutureConsumption"
+                        data-bs-toggle="modal">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphFutureConsumption === 'month'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="consumptionNextMonthLoader "
+                            [fullScreen]="false"
+                            *ngIf="consumptionNextMonthLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #consumptionNextMonthGraph></canvas>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphFutureConsumption === '7days'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="consumptionNext7DaysLoader "
+                            [fullScreen]="false"
+                            *ngIf="consumptionNext7DaysLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #consumptionNext7daysGraph></canvas>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphFutureConsumption === '24h'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="consumptionNext24hLoader "
+                            [fullScreen]="false"
+                            *ngIf="consumptionNext24hLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #next24ConsumptionGraph></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row" id="graph-position" *ngIf="showMeProduction">
+                  <div class="col" id="graph">
+
+                    <label>Select Graph:</label>
+                    <div>
+                      <select class="select-modal"
+                        [(ngModel)]="selectedGraphHistoryProduction"
+                        (ngModelChange)="HistoryProduction(selectedGraphHistoryProduction)">
+                        <option value="month">Previous Month</option>
+                        <option value="7days">Previous 7 days</option>
+                        <option value="24h">Previous 24 hours</option>
+                      </select>
+                      <button class="buttonOpenModal" style="margin-left: 5px;"
+                        mat-button data-bs-target="#HistoryProduction"
+                        data-bs-toggle="modal">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphHistoryProduction === 'month'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="productionPrevMonthLoader "
+                            [fullScreen]="false"
+                            *ngIf="productionPrevMonthLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #productionPrevMonthGraph></canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphHistoryProduction === '7days'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="productionPrev7DaysLoader "
+                            [fullScreen]="false"
+                            *ngIf="productionPrev7DaysLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #productionPrev7daysGraph></canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphHistoryProduction === '24h'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="productionNext24hLoader "
+                            [fullScreen]="false" *ngIf="productionNext24hLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #previous24ProductionGraph></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col" id="graph">
+                    <label for="graphSelect">Select Graph:</label>
+                    <div>
+                      <select class="select-modal"
+                        [(ngModel)]="selectedGraphFutureProduction"
+                        (ngModelChange)="FutureProduction(selectedGraphFutureProduction)">
+                        <option value="month">Next Month</option>
+                        <option value="7days">Next 7 days</option>
+                        <option value="24h">Next 24 hours</option>
+                      </select>
+
+                      <button class="buttonOpenModal" style="margin-left: 5px;"
+                        mat-button data-bs-target="#FutureProduction"
+                        data-bs-toggle="modal">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphFutureProduction === 'month'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="productionNextMonthLoader "
+                            [fullScreen]="false"
+                            *ngIf="productionNextMonthLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #productionNextMonthUSER></canvas>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphFutureProduction === '7days'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="productionNext7DaysLoader "
+                            [fullScreen]="false"
+                            *ngIf="productionNext7DaysLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #productionNext7daysGraph></canvas>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card" id="style-card-next"
+                      *ngIf="selectedGraphFutureProduction === '24h'">
+                      <div class="card-body">
+                        <div>
+                          <ngx-spinner bdColor="rgba(0, 0, 0, 0.5)"
+                            size="medium" color="#fff" type="ball-spin"
+                            [showSpinner]="productionNext24hLoader "
+                            [fullScreen]="false" *ngIf="productionNext24hLoader"><p
+                              style="color: #fff; margin-top:60px;"> Please
+                              wait... </p></ngx-spinner>
+                          <canvas #next24ProductionGraph></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal fade " id="HistoryConsumption" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">
+            <span *ngIf="selectedGraphHistoryConsumption === '24h'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">
+              Consumption For Previous 24h </span>
+            <span *ngIf="selectedGraphHistoryConsumption === '7days'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">
+              Consumption For The Previous 7 days</span>
+            <span *ngIf="selectedGraphHistoryConsumption === 'month'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">
+              Consumption For Previous Month </span>
+          </p>
+          <button type="button" id="closeBtn" class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div *ngIf="selectedGraphHistoryConsumption === '24h'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="dataConsumptionPrevious24h" [type]="'Consumption'"
+            [message]="'Consumption For Previous 24h'" [time]="'Hour'"></app-modal-table-profile>
+        </div>
+        <div *ngIf="selectedGraphHistoryConsumption === '7days'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="data7daysHistoryConsumption" [type]="'Consumption'"
+            [message]="'Consumption For The Previous 7 days'" [time]="'Day'"></app-modal-table-profile>
+        </div>
+        <div *ngIf="selectedGraphHistoryConsumption === 'month'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="dataConsumptionPrevMonth" [type]="'Consumption'"
+            [message]="'Consumption For Previous Month '" [time]="'Day'"></app-modal-table-profile>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"
+            (click)="exportToExcelSelectedHistoryConsumption(selectedGraphHistoryConsumption)">Export
+            Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade " id="FutureConsumption" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">
+            <span *ngIf="selectedGraphFutureConsumption === '24h'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">
+              Consumption for Next 24h </span>
+            <span *ngIf="selectedGraphFutureConsumption === '7days'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">
+              Consumption fot the Next 7 days</span>
+            <span *ngIf="selectedGraphFutureConsumption === 'month'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">
+              Consumption fot Next Month </span>
+          </p>
+          <button type="button" id="closeBtn" class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div *ngIf="selectedGraphFutureConsumption === '24h'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="dataConsumptionNext24h" [type]="'Consumption'"
+            [message]="' Consumption for Next 24h'" [time]="'Hour'"></app-modal-table-profile>
+        </div>
+        <div *ngIf="selectedGraphFutureConsumption === '7days'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="dataConsumption7daysFuture" [type]="'Consumption'"
+            [message]="'Consumption fot the Next 7 days'" [time]="'Day'"></app-modal-table-profile>
+        </div>
+        <div *ngIf="selectedGraphFutureConsumption === 'month'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="dataconsumptionNextMonth" [type]="'Consumption'"
+            [message]="'Consumption fot Next Month'" [time]="'Day'"></app-modal-table-profile>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"
+            (click)="exportToExcelSelectedFutureConsumption(selectedGraphFutureConsumption)">Export
+            Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade " id="HistoryProduction" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">
+            <span *ngIf="selectedGraphHistoryProduction === '24h'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">
+              Production For Previous 24h </span>
+            <span *ngIf="selectedGraphHistoryProduction === '7days'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">
+              Production For The Previous 7 days</span>
+            <span *ngIf="selectedGraphHistoryProduction === 'month'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">
+              Production For Previous Month </span>
+          </p>
+          <button type="button" id="closeBtn" class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div *ngIf="selectedGraphHistoryProduction === '24h'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="dataProduction24hPrevious" [type]="'Consumption'"
+            [message]="'Production For Previous 24h'" [time]="'Hour'"></app-modal-table-profile>
+        </div>
+        <div *ngIf="selectedGraphHistoryProduction === '7days'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="data7daysHistoryProduction" [type]="'Consumption'"
+            [message]="'Production For The Previous 7 days'" [time]="'Day'"></app-modal-table-profile>
+        </div>
+        <div *ngIf="selectedGraphHistoryProduction === 'month'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="dataproductionPreviousMonth" [type]="'Consumption'"
+            [message]="'Production For Previous Month'" [time]="'Day'"></app-modal-table-profile>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"
+            (click)="exportToExcelSelectedHistoryProduction(selectedGraphHistoryProduction)">Export
+            Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade " id="FutureProduction" tabindex="-1"
+    aria-hidden="true" #tableTable>
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">
+            <span *ngIf="selectedGraphFutureProduction === '24h'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">
+              Production For Next 24h </span>
+            <span *ngIf="selectedGraphFutureProduction === '7days'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">Production
+              For The Next 7 days</span>
+            <span *ngIf="selectedGraphFutureProduction === 'month'"
+              style="color: #026670; font-size: 20px; font-weight: 700;">Production
+              For Next Month </span>
+          </p>
+          <button type="button" id="closeBtn" class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div *ngIf="selectedGraphFutureProduction === '24h'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="data24FutureProduction" [type]="'Consumption'"
+            [message]="'Production For Next 24h'" [time]="'Hour'"></app-modal-table-profile>
+        </div>
+        <div *ngIf="selectedGraphFutureProduction === '7days'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="dataProductionNext7days" [type]="'Consumption'"
+            [message]="'Production For The Next 7 days'" [time]="'Day'"></app-modal-table-profile>
+        </div>
+        <div *ngIf="selectedGraphFutureProduction === 'month'"
+          id="modal-body-table" class="modal-body"
+          style="overflow-y: auto; overflow-x: hidden">
+          <app-modal-table-profile #ModalTableComponent
+            [data]="dataProductionNextMonth" [type]="'Consumption'"
+            [message]="'Production For Next Month '" [time]="'Day'"></app-modal-table-profile>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"
+            (click)="exportToExcelSelectedFutureProduction(selectedGraphFutureProduction)">Export
+            Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

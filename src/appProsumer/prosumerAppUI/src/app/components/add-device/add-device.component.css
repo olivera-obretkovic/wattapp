@@ -1,0 +1,289 @@
+@font-face {
+    font-family: font1;
+    src: url(/assets/fonts/Inter-Regular.ttf);
+ }
+
+ @media(max-width: 480px) {
+    .mobile{
+        display: contents;
+    }
+    .desktop{
+        display: none;
+    }
+  }
+  
+  @media(min-width: 481px){
+    .mobile{
+        display: none;
+    }
+    .desktop{
+        display: contents;
+    }
+  }
+
+ 
+@media (max-width: 280px) /*Fold*/
+{ 
+    .container{
+        width: 90%;
+        background-color: white;
+        margin-bottom:10%;
+    }
+    
+    h3{
+        color: #026670;
+        text-transform: none;
+        margin-top: 25px;
+        font-size: 18px;
+    }
+
+    .forma{
+        background-color:white;
+        filter:drop-shadow(0px 4px 4px rgba(0,0,0,0.25));
+        width: 97%;
+    }
+
+    button{
+        margin-top: 10px;
+        margin-bottom: 20px;
+        width: 80%;
+        text-align: center;
+    }
+
+    .custom-select div{
+        padding-top: none;
+    }
+
+    mat-icon{
+        color:#026670;
+    }
+}
+
+@media (min-width: 281px) and (max-width: 480px) /*Phones*/
+{
+    .container{
+        width: 85%;
+        background-color: white;
+    }
+
+    .outer{
+        margin-bottom: 10%;
+    }
+
+    .inputi div input{
+        border: 2px solid #026670;
+    }
+
+    h3{
+        color: #026670;
+        text-transform: none;
+        margin-top: 25px;
+        font-size: 22px;
+    }
+
+    .forma{
+        background-color:white;
+        filter:drop-shadow(0px 4px 4px rgba(0,0,0,0.25));
+        width: 97%;
+    }
+
+    button{
+        margin-top: 10px;
+        margin-bottom: 20px;
+        width: 80%;
+        text-align: center;
+    }
+
+    .custom-select div{
+        padding-top: none;
+    }
+
+    mat-icon{
+        color:#026670;
+    }
+
+}
+ 
+@media (min-width: 481px) and (max-width: 1023px)  /*Tablet*/
+{
+    .container{
+        width: 80%;
+        background-color: #026670;
+    }
+
+    .outer{ 
+        margin-top: 80px;
+    }
+
+    h3{
+        color: white;
+        text-transform: uppercase;
+        margin: 25px 0;
+    }
+
+    .red1{
+        background-color: white;
+        width: 90%;
+        margin:auto;
+        border-radius: 17px;
+        padding-bottom: 20px;
+    }
+
+    .forma{
+        background-color:#EDEAE5;
+        width: 90%;
+    }
+
+    button{
+        margin-top: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .row > .col-sm > button{
+        margin-top: 30px;
+    }
+
+    mat-icon{
+        color:#026670;
+    }
+}
+
+@media (min-width: 1024px) /*Laptops and Desktops */
+{
+    .container{
+        width: 70%;
+        background-color: #026670;
+    }
+
+    .outer{ 
+        margin-top: 80px;
+    }
+    .red1{
+        background-color: white;
+        width: 90%;
+        margin:auto;
+        border-radius: 17px;
+    }
+
+    h3{
+        color:white;
+        text-transform: uppercase;
+        margin: 25px 0;
+        text-align: left;
+    }
+
+    .forma{
+        background-color:#EDEAE5;
+        width: 90%;
+    }
+
+    button{
+        margin-top: 30px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .custom-select div{
+        margin-bottom: 20px;
+    }
+
+    mat-icon{
+        color:white;
+    }
+}
+
+.dodavanje{
+    color: #026670;
+    background-color: white;
+    font-size: 16px;
+    filter:drop-shadow(0px 4px 4px rgba(0,0,0,0.25));
+    border-radius: 17px;
+    font-weight: bold;
+    border: none;
+    padding: 5px 25px;
+}
+
+.container{
+    border-radius: 17px;
+    margin: auto;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 50px;
+    font-family: font1;
+}
+
+.centriranje{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h3{
+    font-weight: bold;
+}
+
+.forma{
+    margin: auto;
+    border-radius: 17px;
+}
+
+select {
+    color: white;
+    background-color: #026670;
+    width:90%;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    text-align: center;
+    height: 50px;
+}
+
+select option:not(:checked) {
+    color: #026670;
+    background-color: white;
+}
+
+.inputi > .form-group> input{
+    width: 90%;
+    border-radius: 10px;
+    filter:drop-shadow(0px 4px 4px rgba(0,0,0,0.25));
+    text-align: center;
+    height: 50px;   
+}
+
+.inputi > .form-group > label, .custom-select div label{
+    margin-left: 15px;
+}
+
+input::placeholder{
+    text-transform: uppercase;
+    color: black;
+    opacity: 0.5;
+    font-size: 12px;
+    font-weight: lighter;
+    font-style: italic;
+}
+
+label{
+    text-transform: uppercase;
+    text-align: left;
+    font-weight: bold;
+    width: 90%;
+    font-size: 13px;
+}
+
+
+.inputi{
+    text-align: center;
+}
+
+.form-group > input{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+select:disabled{
+    background-color: dimgray;
+}

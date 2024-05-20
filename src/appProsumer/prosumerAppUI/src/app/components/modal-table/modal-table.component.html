@@ -1,0 +1,13 @@
+<table tableexporter #myTable id = "myTable">
+  <tr style="position: sticky; top:-20px;">
+      <th>{{ time }}</th>
+      <th>Energy {{ type }} [kWh]</th>
+  </tr>
+  <tr *ngFor="let item of data">
+      <td>{{ item.timestamp }}</td>
+      <td>{{ item.powerUsage.toFixed(2) }} </td>
+  </tr>
+</table>
+
+
+

@@ -1,0 +1,98 @@
+<app-nav class="desktop"></app-nav>
+<app-mob-nav class="mobile"></app-mob-nav>
+
+<div class="outer centriranje">
+    <div class="container">
+        <h3 class="mb-3">Settings</h3>
+        <div class="permissions">
+            <h4>Permissions</h4>
+            <div>
+            <label class="toggle mt-3">
+                <span class="toggle-label">Allow DSO to access my information: &nbsp;</span>
+                <input class="toggle-checkbox" type="checkbox" [disabled]="requestStatus !== 'accepted'" [(ngModel)]="allowAccess" (click)="toggleAccess()">
+                <div class="toggle-switch"></div>
+            </label>
+            </div>
+
+            <div *ngIf="requestStatus == 'no'" class="row d-flex justify-content-center">
+              <button (click)="sendReq()">Send request</button>
+            </div>
+            <div *ngIf="requestStatus == 'pending'" class="row">
+              <div class="col-6">
+                <button class="false w-100">Your request is pending</button>
+              </div>
+              <div class="col-6">
+                <button class="w-100 pending" (click)="cancelReq()">Cancel request</button>
+              </div>
+            </div>
+            <div *ngIf="requestStatus == 'accepted'" class="row">
+              <div class="col-6">
+                <button class="false w-100">You're connected to DSO</button>
+              </div>
+              <div class="col-6">
+                <button class="w-100 bad" (click)="disconnectDSO()">Disconnect from DSO</button>
+              </div>
+            </div>
+        </div>
+        <div>
+        <button class="btn btn-lock"><div class="centriranje"  data-bs-toggle="modal" data-bs-target="#exampleModal"><mat-icon>lock</mat-icon> &nbsp; &nbsp;Change Password</div></button><br>
+        <button class="btn btn-lock mb-4" (click)="signOut()"><div class="centriranje"><mat-icon>exit_to_app</mat-icon>&nbsp; &nbsp;Log Out</div></button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" #exampleModal id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabe" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title" id="exampleModalLabel">
+          <span style="color: #026670; padding-left: 10px; font-size: 22px; font-weight: bold"> Change password </span><br>
+
+        </p>
+
+        <button type="button" id="closeBtn" class="btn-close" (click)="reset()" data-bs-dismiss="modal" aria-label="Close"></button>
+
+      </div>
+      <div class="modal-body">
+        <form [formGroup] = "resetForm">
+          <div class="input-group form-group pt-2">
+            <input class="form-control inputChange" [ngClass]="{'is-invalid invalid-input': fields['currentPassword'].errors && (fields['currentPassword'].dirty || fields['currentPassword'].touched || submitted)}" [(ngModel)]="currentPassword" formControlName="currentPassword" [type]="type3" placeholder="Current Password">
+            <span class="input-group-addon addon-icon" [ngClass]="{'is-invalid invalid-icon': fields['currentPassword'].errors && (fields['currentPassword'].dirty || fields['currentPassword'].touched || submitted)}" ><i style="cursor:pointer" (click)="hideShowPass3()" class="fa {{eyeIcon3}}"></i></span>
+            <div class="invalid-feedback">
+              <ng-container *ngIf="fields['currentPassword'].errors">
+                <span class="text-danger" *ngIf="fields['currentPassword'].errors?.['required'] && (fields['currentPassword'].touched || submitted)">*Current password is required!</span>
+                <span class="text-danger" *ngIf="fields['currentPassword'].errors?.['minlength'] && (fields['currentPassword'].dirty || submitted)">*Password must be at least 6 characters long!</span>
+              </ng-container>
+            </div>
+          </div>
+
+            <div class="input-group form-group pt-2">
+              <input class="form-control inputChange" [ngClass]="{'is-invalid invalid-input': fields['password'].errors && (fields['password'].dirty || fields['password'].touched || submitted)}" [(ngModel)]="newPassword"  formControlName="password" [type]="type" placeholder="New Password">
+              <span class="input-group-addon addon-icon" [ngClass]="{'is-invalid invalid-icon': fields['password'].errors && (fields['password'].dirty || fields['password'].touched || submitted)}" ><i style="cursor:pointer" (click)="hideShowPass()" class="fa {{eyeIcon}}"></i></span>
+              <div class="invalid-feedback">
+                <ng-container *ngIf="fields['password'].errors">
+                  <span class="text-danger" *ngIf="fields['password'].errors?.['required'] && (fields['password'].touched || submitted)">*New password is required!</span>
+                  <span class="text-danger" *ngIf="fields['password'].errors?.['minlength'] && (fields['password'].dirty || submitted)">*Password must be at least 6 characters long!</span>
+                </ng-container>
+              </div>
+            </div>
+
+
+            <div class="input-group form-group pt-2 ">
+              <input class="form-control inputChange invalid-input" [ngClass]="{'is-invalid invalid-input': fields['confirmPassword'].errors && (fields['confirmPassword'].dirty || fields['confirmPassword'].touched || submitted)}" formControlName="confirmPassword" [type]="type2" placeholder="Confirm Password">
+              <span class="input-group-addon addon-icon" [ngClass]="{'is-invalid invalid-icon': fields['confirmPassword'].errors && (fields['confirmPassword'].dirty || fields['confirmPassword'].touched || submitted)}" ><i style="cursor:pointer" (click)="hideShowPass2()" class="fa {{eyeIcon2}}"></i></span>
+              <div class="invalid-feedback">
+                <ng-container *ngIf="fields['confirmPassword'].errors">
+                  <span class="text-danger" *ngIf="fields['confirmPassword'].errors?.['required'] && (fields['confirmPassword'].touched || submitted)">*Confirm password is required!</span>
+                  <span class="text-danger" *ngIf="resetForm.hasError('confirmPasswordValidator', 'confirmPassword') && (fields['confirmPassword'].dirty || submitted)">*Password doesn't match!</span>
+                </ng-container>
+              </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer justify-content-center">
+      <button id="sendButton" type="button" (click)="onReset()" class="btn btn-primary" > CHANGE </button>
+    </div>
+  </div>
+</div>
+</div>

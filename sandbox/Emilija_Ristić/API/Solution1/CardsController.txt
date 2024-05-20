@@ -1,0 +1,41 @@
+[ApiController]
+[Route("api/[controller]")]
+public class CardsController: Controller{
+	
+	private readonly CardDbContext cardDbContext;
+
+	public CardsController(CardsDbContext cardsDbContext){
+		this.cardsDbContext = cardsDbContext;
+	}
+
+	// get all cards
+	[HttpGet]
+	public async Task<IActionResult> GetAllCards(){
+		var cards = await cardsDbContext.Cards.ToListAsync();
+		return Ok(cards);
+	}
+
+	//get a single card
+	[HttpGet]
+	[Route(ID: guid)]
+	public async Task<IActionResult> GetAllCards([FromRoute] Guid ID){
+		var card = awaut cardsDbContext.Cards.ToListAsync(x => x.ID == ID);
+		if(card != null){
+			return Ok(card)
+		}
+		return NotFound("Card not found");
+	}
+
+	//add card
+	[HttpPost]
+	public async Task<IActionResult> AddCard([FromBody] Card card){
+		card.ID Guid.NewGuid();
+		cardsDbContext.Cards.Add(card);
+		
+	}
+
+
+
+
+
+}

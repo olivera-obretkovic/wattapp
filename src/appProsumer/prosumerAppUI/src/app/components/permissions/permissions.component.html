@@ -1,0 +1,64 @@
+<app-nav class="desktop"></app-nav>
+<app-mob-nav class="mobile"></app-mob-nav>
+<div class="outer centriranje">
+    <div class="container">
+        <div class="row">
+            <div class="col-2 align-center">
+                <button mat-icon-button (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+            <div class="col centriranje pb-3">
+                <h3>{{device.deviceName}}</h3>
+            </div>
+            <div class="col-2">
+            </div>
+        </div>
+        <div>
+            <label class="toggle mt-3 pb-3 mb-3">
+                <span class="toggle-label">Allow DSO to control my device: &nbsp;</span>
+                <input class="toggle-checkbox" type="checkbox" [(ngModel)]="allowControl" (click)="toggleControl()">
+                <div class="toggle-switch"></div>
+            </label>
+        </div>
+
+        <!--<div class="row mt-3 mb-3">
+            <h3>Rules And Requirements</h3>
+        </div>
+        <div *ngIf="!allowControl">
+            <h5>You are not allowed to add rules or requirements</h5>
+        </div>
+        <div *ngIf="allowControl">
+            <div class="row align-center mt-3">
+                <button mat-icon-button class="simple r align-center">
+                    <mat-icon>warning</mat-icon>
+                    &nbsp;&nbsp;Add New Rule&nbsp;
+                </button>
+            </div>
+            <div class="row align-center mt-3">
+            <button mat-icon-button class="simple rq align-center">
+                <mat-icon>add_task</mat-icon>
+                &nbsp;&nbsp;Add New Requirement&nbsp;
+            </button>
+            </div>
+        </div>
+        <div class="kolona">
+        <div class="row rule align-center">
+            Turn on Device at<span>9:00</span>
+        </div>
+        <div class="row rule align-center">
+            Turn of Device at<span>17:00</span>
+        </div>
+
+        </div>
+        <div class="kolona">
+        <div class="row rule">
+            Charge up to<span>70%</span>by<span>7:00</span>
+        </div>
+        <div class="row rule align-center">
+            Charge up to<span>70%</span> Everyday
+        </div>
+
+        </div>-->
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<app-nav class="desktop"></app-nav>
+<app-mob-nav class="mobile"></app-mob-nav>
+<br>
+<br>
+<br>
+<br>
+
+    <div class="container">
+        <div class="row" id = "edit-profile">
+
+            <div class="col">
+
+                <h1>User Profile</h1>
+            </div>
+        </div>
+
+        <div class="row" id = "main-form">
+            <div class="col-sm-4"  id = "top" >
+              <div class="row" id = "img-btn" >
+                <div class="col" id = "col-img-btn">
+                  <img [src]="image" alt="Image" style="width: 240px; height: 220px;">
+                </div>
+            </div>
+                <form class="p-4 border" id = "form-user-enter" style="align-items: center;">
+                    <div class="form-group" >
+                        <label for="username">First Name</label>
+                        <input style = "width: 100%" type="text" class="form-control"  id="first-name" aria-describedby="First Namse" name="firstName" [(ngModel)]="firstName" [disabled]="true">
+                    </div>
+
+                    <div class="form-group" style="align-self: center;">
+                        <label for="First Name">Last Name</label>
+                        <input style = "width: 100%" type="text" class="form-control" id="last-name" name="lastName" [(ngModel)]="lastName"  [disabled]="true">
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-sm-7" id = "bottom">
+                <form  class="p-3"id = "form-user-enter">
+
+                    <div class="form-group p-2">
+                        <label for="Email Address">Email Address</label>
+                        <input style = "width: 100%" type="text" class="form-control" name="email"  [(ngModel)]="email" [disabled]="true">
+                    </div>
+                    <div class="form-group p-2">
+                        <label for="Contact Number">Contact Number</label>
+                        <input style = "width: 100%" type="text" class="form-control" id="contact-number" name="phoneNumber"  [(ngModel)]="phoneNumber" [disabled]="true">
+                    </div>
+                    <div class="form-group p-2">
+                        <label for="Address">Address</label>
+                        <input style = "width: 100%" type="text" class="form-control" id="address" name="address"  [(ngModel)]="address"  [disabled]="true">
+                    </div>
+                    <div class="form-group p-2">
+                      <label for="City">City</label>
+                      <input style = "width: 100%" type="text" class="form-control" id="city" name="city"  [(ngModel)]="city" [disabled]="true">
+                  </div>
+                    <div class="form-group p-2">
+                        <label for="Country">Country</label>
+                        <input style = "width: 100%" type="text" class="form-control" id="country" name="country"  [(ngModel)]="country" [disabled]="true">
+                    </div>
+
+                </form>
+            </div>
+            <div class="row-2"id = "btn-save">
+                <div class="col-sm-6" id="col-img-btn-main" >
+                    <button id = "save" routerLink = "/edit-profile" type="submit">Edit Profile</button>
+                </div>
+            </div>
+        </div>
+
+
+
+

@@ -1,0 +1,372 @@
+@font-face {
+    font-family: font1;
+    src: url(/assets/fonts/Inter-Regular.ttf);
+ }
+
+ @media(max-width: 480px) {
+    .mobile{
+        display: contents;
+    }
+    .desktop{
+        display: none;
+    }
+  }
+  
+  @media(min-width: 481px){
+    .mobile{
+        display: none;
+    }
+    .desktop{
+        display: contents;
+    }
+  }
+
+ 
+@media (max-width: 280px) /*Fold*/
+{ 
+    .container{
+        width: 90%;
+        background-color: white;
+        margin-bottom:10%;
+    }
+
+    .outer{
+        margin-bottom: 10%;
+        margin-top:30px;
+    }
+    
+    h3{
+        color: #026670;
+        text-transform: none;
+        margin-top: 25px;
+    }
+
+    .simple{
+        margin-top: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 12px;
+    }
+    .r{
+        width: 50%;
+    }
+    .rq{
+        width:75%;
+    }
+
+    .simple mat-icon{
+        font-size: 16px;
+    }
+
+    mat-icon{
+        color:#026670;
+    }
+    
+    
+}
+
+@media (min-width: 281px) and (max-width: 480px) /*Phones*/
+{
+    .container{
+        width: 85%;
+        background-color: white;
+    }
+
+    .outer{
+        margin-bottom: 10%;
+        margin-top: 30px;
+    }
+
+    h3{
+        color: #026670;
+        text-transform: none;
+        margin-top: 25px;
+    }
+
+    .simple{
+        margin-top: 10px;
+        margin-bottom: 20px;
+        width: 75%;
+        text-align: center;
+        font-size: 12px;
+    }
+    .r{
+        width: 50%;
+    }
+    .rq{
+        width:75%;
+    }
+
+    .simple mat-icon{
+        font-size: 16px;
+        padding-top:4px;
+    }
+
+
+    mat-icon{
+        color:#026670;
+    }
+
+}
+ 
+@media (min-width: 481px) and (max-width: 1023px)  /*Tablet*/
+{
+    .container{
+        width: 80%;
+        background-color: white;
+    }
+
+    .outer{ 
+        margin-top: 80px;
+    }
+
+    h3{
+        color:#026670;
+        text-transform: uppercase;
+        margin: 25px 0;
+        padding-top:15px;
+    }
+
+    .simple{
+        margin-top: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size:16px;
+    }
+    .r{
+        width:30%;
+    }
+
+    .rq{
+        width:45%;
+    }
+
+    .part{
+        background-color:white;
+        border-radius: 17px;
+        filter: drop-shadow(0 4px 4px rgba(0,0,0,0.25));
+    }
+
+    mat-icon{
+        color:#026670;
+      }
+    
+}
+
+@media (min-width: 1024px) /*Laptops and Desktops */
+{
+    .container{
+        width: 70%;
+        background-color: white;
+    }
+
+    .outer{ 
+        margin-top: 80px;
+    }
+
+    h3{
+        color:#026670;
+        text-transform: uppercase;
+        margin: 25px 0;
+        padding-top:15px;
+    }
+
+    .simple{
+        margin-top: 30px;
+        margin-bottom: 30px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .r{
+        width: 50%;
+    }
+
+    .rq{
+        width: 75%;
+    }
+
+    .permissions{
+        width:75%;
+        margin: auto;
+    }
+
+    .kolona{
+        width:50%;
+        float:left;
+    }
+    .part{
+        background-color:white;
+        border-radius: 17px;
+        filter: drop-shadow(0 4px 4px rgba(0,0,0,0.25));
+    }
+
+    mat-icon{
+        color:#026670;
+      }
+    
+    
+}
+
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container{
+    border-radius: 17px;
+    margin: auto;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-family: font1;
+}
+
+h3{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.centriranje{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.simple{
+    border-radius: 17px;
+    background-color:#026670;
+    color:white;
+    font-weight: bold;
+    border: none;
+    filter:drop-shadow(0px 4px 4px rgba(0,0,0,0.25));
+    padding: 5px 5px;
+}
+
+.simple:hover {
+    background-color: #0394a2;
+    color:white;    
+}
+
+.simple:focus{
+    background-color: #0394a2;
+    color: white;
+}
+
+.simple mat-icon{
+    color:white;
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+p{
+    text-align: left;
+    text-transform:uppercase;
+    font-size: 14px;
+    color:#026670;
+    margin-left: 1%;
+}
+
+span{
+    font-weight: bold;
+    color:black;
+}
+
+.label{
+    font-size: 13px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.form-check-input:checked {
+  background-color: #026670;
+}
+
+.rule{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size:13px;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+.rule span{
+    color:#026670;
+    display: inline;
+    text-align: center;
+    align-items: center;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, ".SFNSText-Regular", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+}
+
+.toggle {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.toggle-switch {
+  display: inline-block;
+  background: #ccc;
+  border-radius: 16px;
+  width: 34px;
+  height: 18px;
+  position: relative;
+  vertical-align: middle;
+  transition: background 0.25s;
+}
+.toggle-switch:before, .toggle-switch:after {
+  content: "";
+}
+.toggle-switch:before {
+  display: block;
+  background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  transition: left 0.25s;
+}
+.toggle:hover .toggle-switch:before {
+  background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+.toggle-checkbox:checked + .toggle-switch {
+  background: #026670;
+}
+.toggle-checkbox:disabled + .toggle-switch {
+    background: grey;
+  }
+.toggle-checkbox:checked + .toggle-switch:before {
+  left: 20px;
+}
+
+.toggle-checkbox {
+  position: absolute;
+  visibility: hidden;
+}
+
+.toggle-label {
+  position: relative;
+  top: 2px;
+}
+
+h5{
+    font-size: 14px;
+    color: gray;
+}

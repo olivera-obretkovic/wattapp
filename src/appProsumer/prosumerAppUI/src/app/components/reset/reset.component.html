@@ -1,0 +1,50 @@
+<div class="outer" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;">
+  <div class="container-fluid">
+      <div class="row centriranje pt-4">
+          <div class="centriranje">
+          <img src="/assets/icons/logo-white.png" class="slika">
+          </div>
+      </div>
+      <div class="row centriranje pt-4">
+              <div class="forma panel border bg-white">
+                <i style="cursor:pointer"class="fa fa-arrow-left fa-lg"  id = "arrow" routerLink="/signin"></i>
+                  <h3 class="pt-3 ">
+                      Reset password
+                  </h3>
+                  <div class="panel-body">
+                       <form [formGroup] = "resetForm" (ngSubmit)="onReset()">
+
+                            <div class="input-group form-group pt-4">
+                              <input class="form-control" [ngClass]="{'is-invalid invalid-input': fields['password'].errors && (fields['password'].dirty || fields['password'].touched || submitted)}" formControlName="password" [type]="type" placeholder="New Password">
+                              <span class="input-group-addon addon-icon" [ngClass]="{'is-invalid invalid-icon': fields['password'].errors && (fields['password'].dirty || fields['password'].touched || submitted)}" style="cursor:pointer"><i (click)="hideShowPass()" class="fa {{eyeIcon}}"></i></span>
+                              <div class="invalid-feedback">
+                                <ng-container *ngIf="fields['password'].errors">
+                                  <span class="text-danger" *ngIf="fields['password'].errors?.['required'] && (fields['password'].touched || submitted)">*New password is required!</span>
+                                  <span class="text-danger" *ngIf="fields['password'].errors?.['minlength'] && (fields['password'].dirty || submitted)">*Please provide a valid password!</span>
+                                </ng-container>
+                              </div>
+                            </div>
+
+
+                            <div class="input-group form-group pt-4 pb-5">
+                              <input class="form-control" [ngClass]="{'is-invalid invalid-input': fields['confirmPassword'].errors && (fields['confirmPassword'].dirty || fields['confirmPassword'].touched || submitted)}" formControlName="confirmPassword" [type]="type2" placeholder="Confirm Password">
+                              <span class="input-group-addon addon-icon" [ngClass]="{'is-invalid invalid-icon': fields['confirmPassword'].errors && (fields['confirmPassword'].dirty || fields['confirmPassword'].touched || submitted)}" style="cursor:pointer"><i (click)="hideShowPass2()" class="fa {{eyeIcon2}}"></i></span>
+                              <div class="invalid-feedback">
+                                <ng-container *ngIf="fields['confirmPassword'].errors">
+                                  <span class="text-danger" *ngIf="fields['confirmPassword'].errors?.['required'] && (fields['confirmPassword'].touched || submitted)">*Confirm password is required!</span>
+                                  <span class="text-danger" *ngIf="resetForm.hasError('confirmPasswordValidator', 'confirmPassword') && (fields['confirmPassword'].dirty || submitted)">*Password doesn't match!</span>
+                                </ng-container>
+                              </div>
+                            </div>
+
+                     <button type="submit" class="btn btn-primary btn-lock mb-4 w-100" >Reset</button>
+
+
+                      </form>
+                  </div>
+              </div>
+      </div>
+  </div>
+</div>
+
+

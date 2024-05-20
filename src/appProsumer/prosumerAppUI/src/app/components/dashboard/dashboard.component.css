@@ -1,0 +1,266 @@
+@font-face {
+  font-family: regular;
+  src: url(../../../assets/fonts/Inter-Regular.ttf);
+}
+
+@media (max-width: 280px)
+{
+  .mobile{
+    display: contents;
+}
+.desktop{
+    display: none;
+}
+.container
+  {
+    margin-top: 50px;
+  }
+
+  .container
+  {
+    margin-top: 60px;
+  }
+
+  h2
+  {
+    font-size: 20px;
+
+  }
+
+  .col-sm
+  {
+    width: 90%;
+    padding: 5px;
+    height: 200px;
+  }
+
+
+  select
+  {
+    width:60%;
+    height: 25px;
+    font-size: 9px;
+  }
+
+  .buttonOpenModal
+  {
+    width: 25px !important;
+    height: 25px !important;
+  }
+
+  .modal-title span
+  {
+    font-size: 16px !important;
+  }
+
+}
+
+@media(min-width: 281px) and (max-width: 480px) {
+  .mobile{
+      display: contents;
+  }
+  .desktop{
+      display: none;
+  }
+
+  .buttonOpenModal
+  {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .modal-title span
+  {
+    font-size: 16px !important;
+  }
+
+  .container
+  {
+    margin-top: 60px;
+  }
+
+  h2
+  {
+    font-size: 25px;
+  }
+
+  .col-sm
+  {
+    width: 90%;
+  }
+
+  select
+  {
+    width:45%;
+    height: 30px;
+    font-size: 10px;
+  }
+
+  .kolona
+  {
+    margin-bottom: 60px !important;
+    margin-top: 10px !important;
+  }
+
+}
+
+
+@media(min-width: 481px) and (max-width: 1023px){
+  .mobile{
+      display: none;
+  }
+  .desktop{
+      display: contents;
+  }
+
+  .container
+  {
+    margin-top: 100px;
+  }
+
+  h2
+  {
+    font-size: 30px;
+    margin-top: 15px;
+  }
+
+  .col-sm
+  {
+    margin-left: 20px;
+    width: 60%;
+  }
+
+  select
+  {
+    width:40%;
+    height: 40px;
+    font-size: 9px;
+  }
+}
+
+
+@media(min-width: 1024px){
+  .mobile{
+      display: none;
+  }
+  .desktop{
+      display: contents;
+  }
+
+  .container
+  {
+    margin-top: 120px;
+  }
+
+  h2
+  {
+    font-size: 30px;
+  }
+
+  .col-sm
+  {
+    margin-right: 20px;
+    height: 380px;
+    padding: 20px;
+  }
+
+  select
+  {
+    width:35%;
+    height: 40px;
+    font-size: 13px;
+  }
+
+}
+
+
+
+.outer{
+  height:100vh;
+}
+
+.centriranje{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-sm
+{
+  background-color: white;
+  border-radius: 10px;
+  filter:drop-shadow(0px 8px 4px rgba(0,0,0,0.25));
+
+}
+
+h2
+{
+  color:#026670;
+  text-align: center;
+}
+
+
+select {
+  color: white;
+  background-color: #026670;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+select option:not(:checked) {
+  color: #026670;
+  background-color: white;
+}
+
+
+#closeBtn
+{
+  width: 30px;
+  height: 20px;
+  font-size: 15px;
+  margin-left: 40px;
+}
+
+.modal-body {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.buttonOpenModal
+{
+  background-color: #026670 !important;
+}
+
+
+.buttonOpenModal:hover
+{
+  background-color: #38b4bf !important;
+}
+
+.fa-table
+{
+  color: #fff !important;
+}
+
+button{
+  background-color: #026670;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 8px;
+  filter:drop-shadow(0px 8px 4px rgba(0,0,0,0.25));
+  letter-spacing: 3px;
+  height: 40px;
+}
+
+button:hover {
+  background-color: #fff;
+  color: #026670;
+}
+
+span
+{
+  font-style: italic;
+}

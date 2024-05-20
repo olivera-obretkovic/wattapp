@@ -1,0 +1,73 @@
+<app-nav class="desktop"></app-nav>
+<app-mob-nav class="mobile"></app-mob-nav>
+<br>
+<br>
+<br>
+<br>
+    <div class="container">
+        <div class="row" id = "edit-profile">
+
+            <div class="col">
+                <i style="cursor:pointer"class="fa fa-arrow-left fa-lg"  id = "arrow" routerLink="/profile-prosumer"></i>
+                <h1>Edit Profile</h1>
+            </div>
+        </div>
+
+        <div class="row" id = "main-form">
+            <div class="col-sm-4"  id = "top" >
+                <form class="p-2 border" id = "form-user-enter">
+                    <div class="form-group" >
+                        <label for="username">First Name</label>
+                        <input style = "width: 100%" type="text" class="form-control" id="first-name" aria-describedby="First Namse" name="firstName"  [(ngModel)]="firstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="First Name">Last Name</label>
+                        <input style = "width: 100%" type="text" class="form-control" id="last-name"  name="lastName"  [(ngModel)]="lastName">
+                    </div>
+                </form>
+                <div class="row" id = "img-btn" >
+                    <div class="col-sm-4" id = "col-img-btn">
+                      <img [src]="image" alt="Image" style="width: 240px; height: 220px; margin-top: 10px;">
+                    </div>
+                    <div class="row" id="row-img-btn">
+                      <button class="btn-add-img" (click)="fileInput.click()">Change image</button>
+                      <input type="file" #fileInput (change)="onFileSelected($event).subscribe()" style="display: none;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7" id = "bottom">
+                <form  class="p-2"id = "form-user-enter">
+
+                  <div class="form-group pt-3">
+                    <label for="Email Address">Email Address</label>
+                    <input style="width: 100%" type="text" class="form-control" id="email-address" name="email" [(ngModel)]="email" (input)="onEmailInput()">
+                    <small *ngIf="!isValidEmail && isEmailModified" class="text-danger">*Email is invalid!</small>
+                  </div>
+                  <div class="form-group pt-3">
+                    <label for="Contact Number">Contact Number</label>
+                    <input style="width: 100%" type="text" class="form-control" id="contact-number" name="phoneNumber" [(ngModel)]="phoneNumber" (input)="onPhoneNumberInput()">
+                    <small *ngIf="!isValidPhoneNumber && isPhoneNumberModified" class="text-danger">*Phone number is invalid!</small>
+                  </div>
+                    <div class="form-group pt-3">
+                        <label for="Address">Address</label>
+                        <input style = "width: 100%" type="text" class="form-control" id="address" name="address"  [(ngModel)]="address">
+                    </div>
+                    <div class="form-group pt-3">
+                      <label for="City">City</label>
+                      <input style = "width: 100%" type="text" class="form-control" id="city" name="city"  [(ngModel)]="city">
+                  </div>
+                    <div class="form-group pt-3 pb-2">
+                        <label for="Country">Country</label>
+                        <input style = "width: 100%" type="text" class="form-control" id="country" name="country"  [(ngModel)]="country">
+                    </div>
+                </form>
+            </div>
+
+            <div class="row-2"id = "btn-save">
+                <div class="col-sm-6" id="col-img-btn-main" >
+                    <button id = "save" (click)="onSubmit()" type="submit">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
+    </div>

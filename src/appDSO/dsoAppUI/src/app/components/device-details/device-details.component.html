@@ -1,0 +1,168 @@
+
+<app-nav class="desktop"></app-nav>
+<div class="outer centriranje">
+    <div class="container">
+        <div class="row">
+            <div class="col align-center">
+                <button mat-icon-button (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+            <div class="col centriranje pb-3">
+              <button class="buttonOpenModal ime centriranje w-100" style="margin-left: 5px;
+              color:#026670;
+              margin-top:10px;
+              filter:none;
+              border:none;" mat-button data-bs-target="#editDevice" data-bs-toggle="modal">
+                {{ deviceName }}
+            </button>
+            </div>
+            <div class="col align-center">
+                <p-confirmDialog></p-confirmDialog>
+                <button mat-icon-button (click)="del()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col align-center">
+                <button mat-icon-button class="simple align-center" (click)="toggleDetails()">
+                    <mat-icon>info</mat-icon>
+                    &nbsp;&nbsp;Device details&nbsp;
+                </button>
+            </div>
+            <div class="col align-center">
+                <button mat-icon-button class="simple align-center" (click)="showPermissions()" [disabled]="!allowAccess">
+                    <mat-icon>bolt</mat-icon>
+                    &nbsp;&nbsp;Permissions&nbsp;
+                </button>
+            </div>
+        </div>
+        <div class="row" *ngIf="showDetails">
+            <div class="col-12">
+            <p><span>Device:</span> {{device?.deviceTypeName}}</p>
+            <p><span>Manufacturer:</span> {{device?.manufacturerName}}</p>
+            <p><span>Wattage:</span> {{device?.wattage}}</p>
+            <p><span>Mac Address:</span> {{device?.macAdress}}</p>
+            </div>
+            <div class="col-4 centriranje" hidden >
+            <button mat-icon-button class="simple edit align-center">
+                <mat-icon>edit</mat-icon>
+            </button>
+            </div>
+        </div>
+        <div class="part">
+            <div class="row">
+                <div class="col hide-on-mobile"></div>
+                <div class="col">
+                  <h5 *ngIf="groupName === 'Consumer'">Consumption</h5>
+                  <h5 *ngIf="groupName === 'Producer'">Production</h5>
+                  <h5 *ngIf="groupName === 'Storage'">Storage</h5>
+                </div>
+                <div class="col centriranje" *ngIf="isStorage">
+                    <select [(ngModel)]="selectedOption" (ngModelChange)="onOptionSelect()">
+                        <option value="Today">Today</option>
+                        <option value="Week">Week</option>
+                        <option value="Month">Month</option>
+                    </select>
+
+                    <button class="buttonOpenModal" style="margin-left: 5px;" mat-button data-bs-target="#consumptionHistory" data-bs-toggle="modal">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="align-center chart" *ngIf="isStorage">
+                <ngx-spinner bdColor = "rgba(0, 0, 0, 0.5)" size = "medium" color = "#fff" type = "ball-spin" [showSpinner]="showSpinner" [fullScreen]="false" *ngIf="showSpinner"><span style="color: #fff; font-weight: normal; margin-top: 60px;" > Please wait... </span></ngx-spinner>
+                <canvas #chart></canvas>
+            </div><div class="row">
+            <div *ngIf="!isStorage" class="col-6 centriranje">
+              <div *ngIf="percentage <= 100 && percentage >=90" class="battery">
+                <div class="battery-level" style="height:100%;"></div>
+              </div>
+
+              <div *ngIf="percentage >= 75 && percentage <=89" class="battery">
+                <div class="battery-level" style="height:75%;"></div>
+              </div>
+
+              <div *ngIf="percentage >= 50 && percentage <=74" class="battery">
+                <div class="battery-level" style="height:50%;"></div>
+              </div>
+
+              <div *ngIf="percentage >= 21 && percentage <=49" class="battery">
+                <div class="battery-level" style="height:25%;"></div>
+              </div>
+
+              <div *ngIf="percentage >= 11 && percentage <=20" class="battery">
+                <div class="battery-level warn" style="height:18%;"></div>
+              </div>
+
+              <div *ngIf="percentage <= 10 " class="battery">
+                <div class="battery-level red" style="height:10%;"></div>
+              </div>
+            </div>
+            <div class="col-6 centriranje"><h1 style="color:#026670; font-weight:bold; font-size:30px;">{{percentage}}%</h1></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="consumptionHistory" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">
+            <span *ngIf="selectedOption === 'Today'" style="color: #026670; font-size: 17px; font-weight: 700; text-transform: none; font-style: italic;"> History And Prediction For 24h </span>
+            <span *ngIf="selectedOption === 'Week'" style="color: #026670; font-size: 17px; font-weight: 700; text-transform: none; font-style: italic;"> History And Prediction For 7 days </span>
+            <span *ngIf="selectedOption === 'Month'" style="color: #026670; font-size: 17px; font-weight: 700; text-transform: none; font-style: italic;"> History And Prediction For A Month </span>
+          </p>
+          <button type="button" id="closeBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <div *ngIf="selectedOption === 'Today'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponent [data]="data24h" [type]="groupName === 'Consumer' ? 'Consumption' : 'Production'" [message]="'History And Prediction For 24h'" [time]="'Hour'"></app-modal-table>
+          </div>
+           <div *ngIf="selectedOption === 'Week'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponent [data]="data7days" [type]="groupName === 'Consumer' ? 'Consumption' : 'Production'" [message]="'History And Prediction For 7 days'" [time]="'Date'"></app-modal-table>
+          </div>
+          <div *ngIf="selectedOption === 'Month'" class="modal-body" style="overflow-y: auto; overflow-x: hidden">
+            <app-modal-table #ModalTableComponent [data]="dataMonth" [type]="groupName === 'Consumer' ? 'Consumption' : 'Production'" [message]="'History And Prediction For A Month'" [time]="'Date'"></app-modal-table>
+          </div>
+
+      <div class="modal-footer">
+        <button  *ngIf="selectedOption === 'Today'" type="button" (click)="modalTableComponent.exportToExcel('history_and_prediction_24h_'+ device.deviceName)"  class="btn export" >EXPORT DATA</button>
+        <button  *ngIf="selectedOption === 'Month'" type="button" (click)="modalTableComponent.exportToExcel('history_and_prediction_month_'+device.deviceName)"  class="btn export" >EXPORT DATA</button>
+        <button  *ngIf="selectedOption === 'Week'" type="button" (click)="modalTableComponent.exportToExcel('history_and_prediction_7days_'+device.deviceName)"  class="btn export" >EXPORT DATA</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <div class="modal fade " id="editDevice" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 mat-dialog-title style="color:#026670;">Edit Device Name</h2>
+          <button type="button" id="closeBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      <mat-dialog-content>
+        <form [formGroup]="deviceForm" class="align-center">
+          <mat-form-field  class="align-center">
+            <input matInput formControlName="deviceName" type="text" class="align-center" style="border:2px solid #026670;
+            border-radius: 5px;
+            font-style: italic;
+            font-size: 16px;
+            text-align: center;
+            height: 40px;
+            width:100%;
+            outline:none;">
+            <mat-error *ngIf="deviceForm.controls['deviceName'].hasError('required')">Device Name is required</mat-error>
+          </mat-form-field>
+        </form>
+      </mat-dialog-content>
+
+      <div class="modal-footer">
+        <button type="button" (click)="updateDeviceName()"  class="btn export">Save</button>
+      </div>
+    </div>
+  </div>
+  </div>

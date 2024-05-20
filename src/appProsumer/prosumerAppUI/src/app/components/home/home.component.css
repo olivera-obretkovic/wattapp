@@ -1,0 +1,67 @@
+@font-face {
+  font-family: regular;
+  src: url(../../../assets/fonts/Inter-Regular.ttf);
+}
+
+h1 {
+    text-align: center;
+    font-weight: 600;
+    color: #026670;
+    font-size: 24px;
+}
+
+button {
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+    background-color: #026670;
+    color: #fff;
+    font-size: 16px;
+    height:55px;
+    font-weight: bold;
+
+}
+
+button:hover
+{
+    background-color: #fff;
+    color: #026670;
+    border: 2px solid #026670;
+}
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+
+@media(max-width: 480px) {
+  .mobile{
+      display: contents;
+  }
+  .desktop{
+      display: none;
+  }
+  button{
+    width: 40%;
+  }
+}
+
+@media(min-width: 481px){
+  .mobile{
+      display: none;
+  }
+  .desktop{
+      display: contents;
+  }
+
+  button{
+    width:20%;
+  }
+}

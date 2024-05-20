@@ -1,0 +1,119 @@
+
+<app-nav></app-nav>
+
+<div class="outer" style="position: fixed; top: 40px; left: 0px; width: 100%; height: 100%;">
+  <div class="container-fluid h-100">
+    <div class="row justify-content-center h-100">
+      <div class="col-6 centriranje " style=" background:#EDEAE5;">
+        <div class=" forma panel border" >
+            <h3 class="font-weight-bold">
+                Add New Employee
+            </h3>
+            <div class="panel-body">
+                <form [formGroup] = "signupForm" (ngSubmit)="onSubmit()">
+                    <div class="input-group form-group pt-2">
+                            <input class = "form-control"  [ngClass] = "{'is-invalid invalid-input' : submitted && fields['firstName'].errors}" formControlName = "firstName" type="text" placeholder="First name">
+                            <span class="input-group-addon addon-icon" [ngClass]="{'invalid-icon': submitted && fields['firstName'].errors}"><i class="fa fa-user"></i></span>
+                            <div class="invalid-feedback">
+                                <span class="text-danger" *ngIf="submitted && fields['firstName'].errors?.['required']">*First name is required!</span>
+                            </div>
+                    </div>
+                    <div class="input-group form-group pt-4">
+                        <input class = "form-control"  [ngClass] = "{'is-invalid invalid-input' : submitted && fields['lastName'].errors}" formControlName = "lastName" type="text" placeholder="Last name">
+                        <span class="input-group-addon addon-icon" [ngClass]="{'invalid-icon': submitted && fields['lastName'].errors}"><i class="fa fa-user"></i></span>
+                        <div class="invalid-feedback">
+                            <span class="text-danger" *ngIf="submitted && fields['lastName'].errors?.['required']">*Last name is required!</span>
+                        </div>
+                   </div>
+
+                    <div class="input-group form-group pt-4">
+                        <input class = " form-control"  [ngClass] = "{'is-invalid invalid-input' : submitted && fields['email'].errors}" formControlName = "email" type="text" placeholder="Email">
+                        <span class="input-group-addon addon-icon" [ngClass]="{'invalid-icon': submitted && fields['email'].errors}"><i class="fa fa-envelope"></i></span>
+                        <div class="invalid-feedback">
+                            <span class= "text-danger" *ngIf="submitted && fields['email'].errors?.['required']">*Email is required!</span>
+                            <span class = "text-danger" *ngIf="fields['email'].errors?.['email']">*Please provide a valid email address</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group form-group pt-4">
+                        <input class = "form-control"  [ngClass] = "{'is-invalid invalid-input' : submitted && fields['phonenumber'].errors}" formControlName = "phonenumber" type="text" placeholder="Phone number">
+                        <span class="input-group-addon addon-icon" [ngClass]="{'invalid-icon': submitted && fields['phonenumber'].errors}"><i class="fa fa-phone"></i></span>
+                        <div class="invalid-feedback">
+                            <span class="text-danger" *ngIf="submitted && fields['phonenumber'].errors?.['required']">*Phone number is required!</span>
+                            <span class="text-danger" *ngIf="submitted && fields['phonenumber'].errors?.['pattern']">*Please provide a valid phone number!</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group form-group pt-4">
+                            <input class = "form-control" [ngClass] = "{'is-invalid invalid-input' : submitted && fields['password'].errors}" formControlName = "password" [type]="type" placeholder="Password">
+                            <span  class="input-group-addon addon-icon" style="cursor: pointer;" [ngClass]="{'invalid-icon': submitted && fields['password'].errors}"><i style="cursor:pointer" (click) = "hideShowPass()" class="fa {{eyeIcon}}"></i></span>
+                            <div class="invalid-feedback">
+                                <span class= "text-danger" *ngIf="submitted && fields['password'].errors?.['required']">*Password is required!</span>
+                                <span class = "text-danger" *ngIf="fields['password'].errors?.['minlength']">*Please provide a valid password!</span>
+                            </div>
+                        </div>
+
+                    <div class="input-group form-group pt-4 pb-3">
+                          <input class="form-control" [ngClass]="{'is-invalid invalid-input': fields['confirmPassword'].errors && (fields['confirmPassword'].dirty || fields['confirmPassword'].touched || submitted)}" formControlName="confirmPassword" [type]="type2" placeholder="Confirm Password">
+                          <span class="input-group-addon addon-icon" [ngClass]="{'is-invalid invalid-icon': fields['confirmPassword'].errors && (fields['confirmPassword'].dirty || fields['confirmPassword'].touched || submitted)}"><i style="cursor:pointer" (click)="hideShowPass2()" class="fa {{eyeIcon2}}"></i></span>
+                          <div class="invalid-feedback">
+                            <ng-container *ngIf="fields['confirmPassword'].errors">
+                              <span class="text-danger" *ngIf="fields['confirmPassword'].errors?.['required'] && (fields['confirmPassword'].touched || submitted)">*Confirm password is required!</span>
+                              <span class="text-danger" *ngIf="signupForm.hasError('confirmPasswordValidator', 'confirmPassword') && (fields['confirmPassword'].dirty || submitted)">*Password doesn't match!</span>
+                            </ng-container>
+                          </div>
+                        </div>
+
+
+                    <button type="submit" class="btn btn-primary btn-lock w-50">ADD</button>
+
+
+                  </form>
+              </div>
+            </div>
+        </div>
+            
+        <div class="col-6 centriranjegore">
+            <table >
+                <tr >
+                    <th>Name</th>
+                    <th>Surename</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</th>
+                </tr>
+                <tr *ngFor = "let worker of allWorkers">
+                    <td>{{ worker.firstName }}</td>
+                    <td>{{ worker.lastName }}</td>
+                    <td>{{ worker.role }}</td>
+                    <td>{{ worker.email }}</td>
+                    <td><button class="modalBtn" (click)="giveMeWorker(worker.id)"  mat-button data-bs-target="#profile" data-bs-toggle="modal">
+                        Show Profile
+                    </button>
+                    </td>
+                    <td><button id = "deleteBtn" (click)="deleteDispecher(worker.id)">Delete</button></td>
+
+                </tr>
+            </table>
+            <h1 *ngIf="allWorkers.length == 0" class="justify-content-center align-items-center d-flex">There are no employees</h1>
+        </div>
+        
+    </div>
+  </div>
+</div>
+<div class="modal fade " id="profile" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="profileDispacher">
+            Profile
+          </p>
+          <button type="button" id="closeBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <div class="modal-body" style="overflow-y: auto; overflow-x: hidden; width: 100%;">
+                <app-model-profile #profileDispacher [firstName]="firstNameModal" [lastName]="lastNameModal" [email]="emailModal" [phoneNumber]="mobileModal" [role]="roleModal" [id]="id" ></app-model-profile>
+            </div>
+        </div>
+    </div>
+</div>

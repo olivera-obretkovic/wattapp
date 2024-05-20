@@ -1,0 +1,23 @@
+<div *ngIf="hero" class="forma">
+    <h2>{{ hero.name }}</h2>
+    <div>
+    <div>
+        <label>Name:  </label>
+        <input [(ngModel)]="hero.name" placeholder="Name" />
+    </div>
+    <div>
+        <label>First Name:  </label>
+        <input [(ngModel)]="hero.firstName" placeholder="First Name" />
+    </div>
+    <div>
+        <label>Last Name:  </label>
+        <input [(ngModel)]="hero.lastName" placeholder="Last Name" />
+    </div>
+    <div>
+        <label>Place:  </label>
+        <input [(ngModel)]="hero.place" placeholder="Place" />
+    </div></div>
+    <button (click)="updateHero(hero)" *ngIf="hero.id">Save</button><span></span>
+    <button (click)="deleteHero(hero)" *ngIf="hero.id">Delete</button>
+    <button (click)="createHero(hero)" *ngIf="!hero.id">Add</button>
+</div>
